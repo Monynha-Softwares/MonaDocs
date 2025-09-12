@@ -11,9 +11,11 @@
   "scripts": {
     "create": "hugo new",
     "dev": "hugo server --disableFastRender --noHTTPCache",
+    "start": "hugo server --disableFastRender --noHTTPCache --port 3000",
     "format": "prettier **/** -w -c",
     "build": "hugo --minify --gc",
-    "preview": "vite preview --outDir public"
+    "preview": "vite preview --outDir public",
+    "postinstall": "bash scripts/install-hugo.sh"
   },
   "dependencies": {
     "@thulite/doks-core": "^1.8.3",
