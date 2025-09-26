@@ -1,5 +1,6 @@
 ---
 title: "Onboarding de novos clientes"
+slug: "onboarding-clientes"
 description: "Guia para conduzir a implantação inicial das soluções Monynha Softwares."
 summary: "Checklist detalhado para garantir uma experiência consistente do kick-off ao go-live."
 date: 2024-04-19T00:00:00+00:00

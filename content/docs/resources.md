@@ -1,5 +1,6 @@
 ---
 title: "Recursos oficiais"
+slug: "recursos"
 description: "Coleção de links úteis para equipes internas, parceiros e clientes da Monynha Softwares."
 summary: "Acesse repositórios, materiais de marca e canais de comunicação em um só lugar."
 date: 2024-02-27T09:30:56+01:00
