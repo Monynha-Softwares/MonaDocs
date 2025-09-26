@@ -1,6 +1,6 @@
 # Hugo
-title = "Monynha Docs"
-description = "Get to know more about our awesome projects and awesome open source resources!"
+title = "Mona Docs — Monynha Softwares"
+description = "Portal de documentação e aprendizados da Monynha Softwares"
 images = ["cover.png"]
 
 # mainSections
@@ -45,8 +45,8 @@ mainSections = ["docs"]
 
   # Nav
   sectionNav = ["docs"] # ["docs"] (default) or list of sections (e.g. ["docs", "guides"])
-  toTopButton = false # false (default) or true
-  breadcrumbTrail = false # false (default) or true
+  toTopButton = true # false (default) or true
+  breadcrumbTrail = true # false (default) or true
   headlineHash = true # true (default) or false
   scrollSpy = true # true (default) or false
 
@@ -131,7 +131,7 @@ mainSections = ["docs"]
   [seo.schemas]
     type = "Organization" # Organization (default) or Person
     logo = "favicon-512x512.png" # Logo of Organization — favicon-512x512.png (default)
-    name = "Thulite" # Name of Organization or Person
+    name = "Monynha Softwares" # Name of Organization or Person
     sameAs = [] # E.g. ["https://github.com/thuliteio/thulite", "https://fosstodon.org/@thulite"]
     images = ["cover.png"] # ["cover.png"] (default)
     article = [] # Article sections
