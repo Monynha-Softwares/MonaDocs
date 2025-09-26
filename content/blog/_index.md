@@ -1,19 +1,19 @@
 ---
-title: "Blog"
-description: ""
-summary: ""
+title: "Novidades Monynha"
+description: "Atualizações de produto, histórias de clientes e aprendizados da equipe Monynha Softwares."
+summary: "Fique por dentro dos bastidores e iniciativas que impulsionam nossos lançamentos."
 date: 2023-09-07T16:21:44+02:00
 lastmod: 2023-09-07T16:21:44+02:00
 draft: false
-weight: 50
-categories: []
-tags: []
+weight: 10
+categories: ["atualizacoes"]
+tags: ["monynha", "produtos", "cultura"]
 contributors: []
 pinned: false
 homepage: false
 seo:
-  title: "" # custom title (optional)
-  description: "" # custom description (recommended)
-  canonical: "" # custom canonical URL (optional)
-  noindex: false # false (default) or true
+  title: "Blog Monynha Softwares"
+  description: "Insights, lançamentos e histórias da comunidade Monynha Softwares."
+  canonical: ""
+  noindex: false
 ---

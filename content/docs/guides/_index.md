@@ -1,15 +1,15 @@
 ---
-title: "Guides"
-description: ""
-summary: ""
+title: "Guias detalhados"
+description: "Tutoriais passo a passo para colocar as soluções Monynha em operação."
+summary: "Do planejamento ao pós-lançamento, siga orientações completas para entregar projetos com qualidade."
 date: 2023-09-07T16:06:50+02:00
 lastmod: 2023-09-07T16:06:50+02:00
 draft: false
-weight: 800
+weight: 20
 toc: true
 seo:
-  title: "" # custom title (optional)
-  description: "" # custom description (recommended)
-  canonical: "" # custom canonical URL (optional)
-  noindex: false # false (default) or true
+  title: "Guias detalhados Monynha"
+  description: "Passo a passo para implementar plataformas e integrações da Monynha Softwares."
+  canonical: ""
+  noindex: false
 ---
