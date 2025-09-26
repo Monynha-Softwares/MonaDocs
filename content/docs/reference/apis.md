@@ -1,6 +1,5 @@
 ---
 title: "Padrões de API"
-slug: "apis"
 description: "Convenções para desenvolvimento e consumo das APIs Monynha."
 summary: "Formatos de request/response, autenticação e versionamento."
 date: 2024-04-19T00:00:00+00:00

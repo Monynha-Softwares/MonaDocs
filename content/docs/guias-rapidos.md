@@ -1,6 +1,5 @@
 ---
 title: "Guias rápidos"
-slug: "guias-rapidos"
 description: "Passos essenciais para configurar ambientes e lançar atualizações das soluções Monynha."
 summary: "Checklist prático para quem precisa entregar valor com agilidade."
 date: 2024-04-19T00:00:00+00:00

@@ -1,6 +1,5 @@
 ---
 title: "Suporte e governança"
-slug: "suporte-governanca"
 description: "Procedimentos, canais e políticas que asseguram a continuidade dos serviços Monynha."
 summary: "Entenda como acionar suporte, reportar incidentes e seguir diretrizes de compliance."
 date: 2024-04-19T00:00:00+00:00

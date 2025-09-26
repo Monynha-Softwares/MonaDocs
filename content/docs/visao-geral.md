@@ -1,6 +1,5 @@
 ---
 title: "Visão geral"
-slug: "visao-geral"
 description: "Conheça o propósito, os pilares e as frentes de atuação da Monynha Softwares."
 summary: "Contexto estratégico para orientar decisões de produto e relacionamento com clientes."
 date: 2024-04-19T00:00:00+00:00
