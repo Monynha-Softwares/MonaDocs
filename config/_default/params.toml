@@ -1,13 +1,13 @@
 # Hugo
-title = "Monynha Docs"
-description = "Get to know more about our awesome projects and awesome open source resources!"
-images = ["cover.png"]
+title = "Documentação da Monynha"
+description = "Documentação oficial da Monynha Softwares — tecnologia financeira simplificada para os nossos clientes."
+images = ["cover.jpg"]
 
 # mainSections
 mainSections = ["docs"]
 
 [social]
-  twitter = "getdoks"
+  github = "https://github.com/Monynha-Softwares"
 
 # Doks (@thulite/doks-core)
 [doks]
@@ -20,9 +20,9 @@ mainSections = ["docs"]
   containerBreakpoint = "lg" # "", "sm", "md", "lg" (default), "xl", "xxl", or "fluid"
 
   ## Button
-  navBarButton = false # false (default) or true
-  navBarButtonUrl = "/docs/prologue/introduction/"
-  navBarButtonText = "Get started"
+  navBarButton = true # false (default) or true
+  navBarButtonUrl = "https://monynha.com.br"
+  navBarButtonText = "Ir para Monynha"
 
   # FlexSearch
   flexSearch = true # true (default) or false
@@ -74,7 +74,7 @@ mainSections = ["docs"]
   editPage = false # false (default) or true
   lastMod = false # false (default) or true
   repoHost = "GitHub" # GitHub (default), Gitea, GitLab, Bitbucket, or BitbucketServer
-  docsRepo = "https://github.com/h-enk/doks"
+  docsRepo = "https://github.com/Monynha-Softwares/MonaDocs"
   docsRepoBranch = "main" # main (default), master, or <branch name>
   docsRepoSubPath = "" # "" (none, default) or <sub path>
 
@@ -131,9 +131,9 @@ mainSections = ["docs"]
   [seo.schemas]
     type = "Organization" # Organization (default) or Person
     logo = "favicon-512x512.png" # Logo of Organization — favicon-512x512.png (default)
-    name = "Thulite" # Name of Organization or Person
-    sameAs = [] # E.g. ["https://github.com/thuliteio/thulite", "https://fosstodon.org/@thulite"]
-    images = ["cover.png"] # ["cover.png"] (default)
+    name = "Monynha Softwares" # Name of Organization or Person
+    sameAs = ["https://github.com/Monynha-Softwares"] # E.g. ["https://github.com/thuliteio/thulite", "https://fosstodon.org/@thulite"]
+    images = ["cover.jpg"] # ["cover.png"] (default)
     article = [] # Article sections
     newsArticle = [] # NewsArticle sections
     blogPosting = ["blog"] # BlogPosting sections
