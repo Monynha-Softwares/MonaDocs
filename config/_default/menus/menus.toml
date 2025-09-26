@@ -1,0 +1,29 @@
+[[main]]
+  name = "Guias"
+  url = "/docs/guias/"
+  weight = 10
+
+[[main]]
+  name = "Playbooks"
+  url = "/docs/playbooks/"
+  weight = 20
+
+[[main]]
+  name = "Padrões"
+  url = "/docs/padroes/"
+  weight = 30
+
+[[main]]
+  name = "Projetos"
+  url = "/docs/projetos/"
+  weight = 40
+
+[[main]]
+  name = "FAQ"
+  url = "/docs/faq/"
+  weight = 50
+
+[[main]]
+  name = "Ecossistema"
+  url = "/ecossistema/"
+  weight = 90
