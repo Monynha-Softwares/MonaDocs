@@ -139,6 +139,40 @@
   line-height: 1.5;
 }
 
+.previewArea {
+  margin-top: 1rem;
+  border-top: 1px dashed var(--ifm-color-emphasis-200);
+  padding-top: 1rem;
+}
+
+.previewLoading {
+  color: var(--ifm-color-emphasis-500);
+  font-size: 0.95rem;
+}
+
+.previewError {
+  color: var(--ifm-color-danger-600);
+  font-size: 0.95rem;
+}
+
+.previewContent {
+  color: var(--ifm-color-emphasis-700);
+}
+
+.readMoreRow {
+  margin-top: 1rem;
+}
+
+.readMoreBtn {
+  display: inline-block;
+  background: var(--ifm-color-primary);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
 @media screen and (max-width: 768px) {
   .sectionTitle {
     font-size: 2rem;
