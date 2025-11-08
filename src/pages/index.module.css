@@ -3,6 +3,7 @@
  * and scoped locally.
  */
 
+/* Refactored CSS for better readability and maintainability */
 .heroBanner {
   padding: 4rem 0;
   text-align: center;

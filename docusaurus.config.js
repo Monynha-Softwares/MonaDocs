@@ -12,7 +12,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'MonaDocs',
   tagline: 'Documentação Central da Monynha Softwares',
-  favicon: 'img/favicon.ico',
+  // Use an SVG favicon for crisp rendering on modern browsers
+  // If you need .ico for legacy support, add `static/img/favicon.ico` and update this line.
+  favicon: 'img/favicon.svg',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -89,13 +91,31 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
+          // Explicit dropdown exposing main documentation areas so the mobile menu
+          // shows all relevant links (projects, technologies, guidelines, etc.).
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
             label: 'Documentação',
+            position: 'left',
+            items: [
+              { to: '/docs/intro', label: 'Introdução' },
+              { to: '/docs/projects/boteco-pro', label: 'Projetos' },
+              { to: '/docs/technologies/frontend-stack', label: 'Tecnologias' },
+              { to: '/docs/guidelines/ux-guidelines', label: 'Guidelines' },
+              { to: '/docs/identity/brand-guidelines', label: 'Identidade' },
+              { to: '/docs/contribution/contributing', label: 'Contribuição' },
+              { to: '/docs/architecture/backend-architecture', label: 'Arquitetura' },
+            ],
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          { to: '/blog', label: 'Blog', position: 'left' },
+          {
+            label: 'Empresa',
+            position: 'right',
+            items: [
+              { label: 'Monynha.com', href: 'https://monynha.com' },
+              { label: 'Projetos', href: 'https://monynha.com/projetos' },
+              { label: 'Portfólio', href: 'https://marcelo.monynha.com/portifolio' },
+            ],
+          },
           {
             href: 'https://github.com/Monynha-Softwares',
             label: 'GitHub',
