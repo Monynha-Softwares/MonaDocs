@@ -4,32 +4,32 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Projetos Inovadores',
+    title: 'Innovative Projects',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Explore nossa documentação completa de projetos, desde sistemas de gestão
-        para bares e restaurantes até plataformas educacionais e soluções web modernas.
+        Browse our project documentation — from restaurant management systems to
+        educational platforms and modern web applications.
       </>
     ),
   },
   {
-    title: 'Tecnologias Avançadas',
+    title: 'Advanced Technologies',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Conheça as tecnologias que utilizamos: TypeScript, Flutter, Convex, Coolify,
-        Docker e muito mais. Guias práticos e melhores práticas incluídas.
+        Learn about the technologies we use: TypeScript, Flutter, Convex, Coolify,
+        Docker and more — with practical guides and recommended best practices.
       </>
     ),
   },
   {
-    title: 'Padrões e Qualidade',
+    title: 'Standards & Quality',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Acesse nossos padrões internos de desenvolvimento, guias de contribuição
-        e práticas recomendadas para manter a qualidade em todos os projetos.
+        Access our internal development standards, contribution guides, and
+        quality practices that help maintain excellence across projects.
       </>
     ),
   },

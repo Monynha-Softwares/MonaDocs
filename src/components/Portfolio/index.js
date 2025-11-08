@@ -6,27 +6,27 @@ import styles from './styles.module.css';
 const projects = [
   {
     title: 'Boteco Pro',
-    description: 'Sistema completo de gestão para bares e restaurantes com controle de pedidos, estoque e financeiro.',
+    description: 'A complete management system for bars and restaurants: orders, inventory, and billing.',
     technologies: ['Flutter', 'TypeScript', 'Convex'],
-    status: 'Em Desenvolvimento',
-  link: '/docs/projects/boteco-pro',
+    status: 'In Development',
+    link: '/docs/projects/boteco-pro',
     icon: '🍺',
     color: '#FF6B35'
   },
   {
-    title: 'Plataforma Educacional',
-    description: 'Sistema de ensino online com cursos interativos, acompanhamento de progresso e certificação.',
+    title: 'Educational Platform',
+    description: 'Online learning platform with interactive courses, progress tracking, and certification.',
     technologies: ['React', 'TypeScript', 'Docker'],
-    status: 'Planejado',
+    status: 'Planned',
     link: '/docs/intro',
     icon: '🎓',
     color: '#4F46E5'
   },
   {
-    title: 'Sistema de Gestão Empresarial',
-    description: 'Suite completa para gestão empresarial com módulos de RH, financeiro e operações.',
+    title: 'Enterprise Management Suite',
+    description: 'A complete suite for enterprise management with HR, finance, and operations modules.',
     technologies: ['TypeScript', 'Coolify', 'Docker'],
-    status: 'Em Planejamento',
+    status: 'Planned',
     link: '/docs/intro',
     icon: '🏢',
     color: '#10B981'
@@ -35,15 +35,15 @@ const projects = [
 
 const testimonials = [
   {
-    name: 'Cliente Satisfeito',
-    role: 'Proprietário de Bar',
-    content: 'O Boteco Pro revolucionou a gestão do meu estabelecimento. Interface intuitiva e funcionalidades completas.',
+    name: 'Happy Customer',
+    role: 'Bar Owner',
+    content: 'Boteco Pro transformed how I run my business. Intuitive UI and complete feature set.',
     avatar: '👤'
   },
   {
-    name: 'Parceiro Tecnológico',
-    role: 'Desenvolvedor',
-    content: 'Excelente trabalho em equipe e qualidade de código. Tecnologias modernas e boas práticas implementadas.',
+    name: 'Technology Partner',
+    role: 'Developer',
+    content: 'Great team and strong code quality. Modern technologies and solid practices in place.',
     avatar: '👨‍💻'
   }
 ];
@@ -132,14 +132,14 @@ export default function Portfolio() {
 
         {/* CTA Section */}
         <div className={styles.ctaSection}>
-          <h3>Pronto para inovar com a gente?</h3>
-          <p>Entre em contato e vamos discutir seu próximo projeto</p>
+          <h3>Ready to innovate with us?</h3>
+          <p>Get in touch and let's discuss your next project.</p>
           <div className={styles.ctaButtons}>
             <Link to="https://monynha.com/contact" className="button button--primary button--lg">
-              Falar com a Equipe
+              Talk to the Team
             </Link>
             <Link to="/docs/intro" className="button button--outline button--lg">
-              Ver Documentação
+              View Documentation
             </Link>
           </div>
         </div>

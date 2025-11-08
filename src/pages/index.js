@@ -15,30 +15,30 @@ function HomepageHeader() {
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
         <Heading as="h1" className="hero__title">
-          Bem-vindo à <span className="gradient-text">MonaDocs</span>
-        </Heading>
-        <p className="hero__subtitle">
-          Documentação central da <strong>Monynha Softwares</strong> - Inovando com tecnologia
-        </p>
-        <div className={styles.heroDescription}>
-          <p>
-            Explore nossa documentação completa sobre projetos inovadores,
-            tecnologias avançadas e padrões de desenvolvimento que impulsionam
-            soluções digitais de ponta.
+            Welcome to <span className="gradient-text">MonaDocs</span>
+          </Heading>
+          <p className="hero__subtitle">
+            Central documentation for <strong>Monynha Softwares</strong> — innovating with technology
           </p>
-        </div>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            🚀 Explorar Documentação
-          </Link>
-          <Link
-            className="button button--outline button--lg"
-            to="https://monynha.com">
-            🌐 Visitar Website
-          </Link>
-        </div>
+          <div className={styles.heroDescription}>
+            <p>
+              Explore our complete documentation on innovative projects, modern
+              technologies, and engineering standards that power robust digital
+              solutions.
+            </p>
+          </div>
+          <div className={styles.buttons}>
+            <Link
+              className="button button--secondary button--lg"
+              to="/docs/intro">
+              🚀 Explore Documentation
+            </Link>
+            <Link
+              className="button button--outline button--lg"
+              to="https://monynha.com">
+              🌐 Visit Website
+            </Link>
+          </div>
       </div>
     </header>
   );
@@ -48,8 +48,8 @@ export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`MonaDocs - Documentação Monynha Softwares`}
-      description="Documentação central contendo guias, padrões e informações sobre projetos, tecnologias e processos da Monynha Softwares">
+      title={`MonaDocs - Monynha Softwares Documentation`}
+      description="Central documentation containing guides, standards, and information about Monynha Softwares projects, technologies, and processes">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
