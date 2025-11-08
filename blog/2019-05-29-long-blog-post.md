@@ -2,6 +2,7 @@
 title: Removed example post
 authors: [slorber]
 tags: [archived]
+draft: true
 ---
 
 This example blog post has been removed and replaced by updated content. See the new post "Twelve-Factor App methodology" in this blog.

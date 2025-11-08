@@ -2,6 +2,7 @@
 title: "Twelve-Factor App methodology — twelve quick rules for modern apps"
 authors: [marcelo-m7]
 tags: [architecture, twelve-factor, best-practices]
+draft: true
 ---
 
 The Twelve-Factor App is a methodology for building software-as-a-service apps that are portable, declarative, and suitable for modern cloud platforms. Originally described at https://12factor.net/ and summarized on https://en.wikipedia.org/wiki/Twelve-Factor_App_methodology, the twelve factors provide pragmatic guidance that applies to web apps, microservices, and even static/documentation sites that have runtime components.
