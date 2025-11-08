@@ -39,7 +39,8 @@ function Feature({Svg, title, description}) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        {/* Provide accessible label for decorative/illustrative SVGs */}
+        <Svg className={styles.featureSvg} role="img" aria-label={title} />
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
