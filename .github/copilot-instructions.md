@@ -1,86 +1,46 @@
 ## MonaDocs — AI coding agent instructions
 
-This short guide highlights repository-specific facts an AI agent needs to be productive working on the MonaDocs Docusaurus v3 site.
+This concise guide gives AI coding agents the exact repository facts needed to be productive immediately.
 
-### Quick facts (how to run)
+Quick facts
+
 - Node: >= 20 (see `package.json` "engines").
-- Install: `yarn`
-- Dev server: `yarn start` (Docusaurus hot reload, port 3000)
-- Build: `yarn build` → artifacts in `build/`
-- Preview: `yarn serve`
-- Deploy: `USE_SSH=true; yarn deploy` (Docusaurus GitHub Pages preset)
+- Package manager: `yarn`.
+- Key scripts: `yarn start` (dev), `yarn build`, `yarn serve`, `yarn deploy`.
+- Tests: run `node --test scripts` (see `scripts/` folder).
 
-### Architecture & important files
-- Docusaurus config: `docusaurus.config.js` — controls navbar, footer, editUrl (points to `dev` by default), color mode, and presets.
-- Docs content: `docs/` — grouped into subfolders (e.g., `projects/`, `technologies/`). Each folder MAY contain `_category_.json` for metadata.
-- Sidebar generator: `sidebars.js` — programmatic sidebar produced from top-level folders. If you add a folder, the sidebar is auto-included by `TOP_FOLDERS` order.
-- Blog: `blog/` — MD/MDX with YAML frontmatter; authors in `blog/authors.yml`.
-- Components/UI: `src/components/*` (examples: `HomepageFeatures`, `Portfolio`, `TechStack`) and global styles in `src/css/custom.css`.
-- Static assets: `static/img/` for global images; doc-local images can live in `docs/<section>/img/` and be referenced as `./img/foo.png`.
+Architecture & key files
 
-### Project-specific conventions (do this here)
-- Sidebar: Prefer adding `_category_.json` inside a docs subfolder for label/description overrides; `sidebars.js` reads these and generates categories.
-- Doc file ids: `sidebars.js` expects `folder/filename` ids (it prefers `index.md`/`index.mdx` for directory indexes).
-- Config edits: `docusaurus.config.js` runs in Node — do not reference `window`/DOM. Use `editUrl` when you want "edit this page" links to point to a specific branch (currently `dev`).
+- Docusaurus v3 site. Config: `docusaurus.config.js` (note: `editUrl` points at branch `dev`).
+- Docs: `docs/` (grouped by subfolders). Category metadata: `_category_.json` in subfolders.
+- Sidebar: `sidebars.js` dynamically reads `docs/` and builds categories using `TOP_FOLDERS`. Edit this file for manual ordering.
+- Blog: `blog/` (MD/MDX). Authors: `blog/authors.yml`. Use `YYYY-MM-DD-title.md` filenames with YAML frontmatter (`title`, `tags`, `authors`).
+- UI components: `src/components/` (e.g., `HomepageFeatures`, `TechStack`, `Portfolio`). Global CSS: `src/css/custom.css`.
+- Static assets: `static/img/` (use `docs/<section>/img/` for doc-local images referenced as `./img/foo.png`).
 
-### Examples (use these when making changes)
-- Add a doc: create `docs/<section>/new-doc.md`, add `_category_.json` if you need a custom label, then ensure `TOP_FOLDERS` in `sidebars.js` includes the folder if you want it surfaced.
-- Add a blog post: `blog/YYYY-MM-DD-title.md` with YAML frontmatter: `title`, `tags`, `authors` — add new authors in `blog/authors.yml`.
-- Edit homepage features: modify `src/components/HomepageFeatures/index.js` and the corresponding `styles.module.css`, then run `yarn start` to preview.
+Conventions & quick examples
 
-### Build & validation notes
-- No CI is configured in the repo; validate changes locally with `yarn build && yarn serve` and inspect `build/`.
-- Tests: package.json provides a `test` script (`node --test scripts`) — check `scripts/` for test files if you need unit-style checks.
+- Add a doc: create `docs/<section>/new-doc.md` or `docs/<section>/index.md`. Add `_category_.json` to customize label/description.
+- Add a blog post: create `blog/2025-11-08-my-post.md` with YAML frontmatter and add authors into `blog/authors.yml`.
+- Edit homepage features: update `src/components/HomepageFeatures/index.js` and its `styles.module.css`; preview with `yarn start`.
 
-### Watch-outs and gotchas
-- `sidebars.js` is intentionally dynamic: it expects certain folder structure and will generate indexes. If you need manual ordering beyond what it provides, edit `sidebars.js` directly.
-- Docusaurus config is evaluated by Node — avoid client-only code inside `docusaurus.config.js` or `sidebars.js`.
-- The `editUrl` in config points at the `dev` branch — update it if your PRs target a different base branch.
+Build / validate / deploy
 
-If any part of this is incomplete or you'd like more examples (e.g., how components are wired into MDX), tell me which area to expand and I'll iterate.
-## MonaDocs AI Coding Agent Instructions
+- Install: `yarn`. Dev: `yarn start` (hot reload, port 3000). Build: `yarn build`. Preview: `yarn serve`.
+- Deploy: GitHub Pages via `yarn deploy`. Example: `USE_SSH=true; yarn deploy` (docusaurus preset).
+- Local validation: `yarn build && yarn serve` and inspect `build/`. There is no CI configured by default.
 
-This guide enables AI coding agents to work productively in the MonaDocs Docusaurus v3 documentation site. It summarizes essential architecture, workflows, and conventions unique to this codebase.
+Watch-outs (repo-specific)
 
-### Big Picture Architecture
-- **Docusaurus v3 Classic Preset**: Site configuration in `docusaurus.config.js`. Docs in `docs/`, blog in `blog/`, custom React UI in `src/components/`, static assets in `static/`.
-- **Docs & Blog Structure**: Docs are grouped by subfolders, each with optional `_category_.json` for sidebar organization. Blog posts use Markdown/MDX with metadata in YAML frontmatter and centralized author/tag files.
-- **Sidebar Management**: `sidebars.js` controls sidebar structure. Update this when adding, moving, or regrouping docs.
-- **Custom UI**: Reusable React components (e.g., `HomepageFeatures`, `TechStack`, `Portfolio`) live in `src/components/`. Global styles in `src/css/custom.css`; component styles in `src/components/*/styles.module.css`.
+- `docusaurus.config.js` and `sidebars.js` run on Node — avoid browser globals like `window` or `document`.
+- `sidebars.js` expects a particular `docs/` layout and `TOP_FOLDERS` ordering; moving files without updating `_category_.json` can break the generated sidebar.
+- `future.v4: true` is enabled in config; be cautious when upgrading Docusaurus or changing theme internals.
 
-### Developer Workflows
-- **Install dependencies**: `yarn` (Node >= 20 required)
-- **Start dev server**: `yarn start` (hot reload, port 3000)
-- **Build production**: `yarn build`
-- **Preview build**: `yarn serve`
-- **Deploy to GitHub Pages**: `USE_SSH=true; yarn deploy` or `GIT_USER=<username>; yarn deploy`
-- **No automated tests**: Validate changes by running `yarn build && yarn serve` and inspecting `build/` output.
+Files to inspect when debugging
 
-### Project-Specific Conventions
-- **Docs Grouping**: Use `_category_.json` in each `docs/` subfolder for sidebar grouping. Always update `sidebars.js` if moving docs.
-- **Images**: Place global images in `static/img/`. For doc-specific images, use an `img/` folder next to the doc and reference with `./img/foo.png`.
-- **MDX Usage**: Embed React components in docs/blogs via MDX. See examples in `docs/` and `blog/`.
-- **Blog Metadata**: Blog posts require YAML frontmatter (`title`, `tags`, `authors`). Add new authors to `blog/authors.yml`.
+- `package.json` — scripts and `engines.node` requirement.
+- `docusaurus.config.js` — nav, footer, editUrl, and presets.
+- `sidebars.js` — dynamic sidebar generation logic.
+- `docs/`, `blog/`, `src/components/`, `static/img/` — content, components, and assets.
 
-### Integration Points & External Dependencies
-- **Docusaurus Packages**: See `package.json` for dependencies. Avoid adding large runtime dependencies unless justified.
-- **Deployment**: Default is GitHub Pages. Ensure `organizationName` and `projectName` in `docusaurus.config.js` match the repo.
-- **CI/CD**: No CI present. If adding, use Node >= 20 and include `yarn install && yarn build`.
-
-### Examples of Common Changes
-- **Add a Doc**: Create `docs/<section>/new-doc.md` or `.mdx`. Update `sidebars.js` for sidebar changes.
-- **Add a Blog Post**: Create `blog/YYYY-MM-DD-title.md` with YAML frontmatter. Update `blog/authors.yml` for new authors.
-- **Edit Homepage Features**: Change `src/components/HomepageFeatures/index.js` and `styles.module.css`. Use `yarn start` for hot reload.
-
-### Watch-Outs & Gotchas
-- **Node Environment**: Docusaurus config runs in Node.js. Avoid browser-only code (`window`, `document`).
-- **Version Compatibility**: Uses Docusaurus v3 with `future.v4: true`. Test thoroughly before upgrading.
-- **Sidebar/Category Sync**: Always sync changes between `_category_.json` and `sidebars.js`.
-
-### Contribution Guidelines
-- Make small, testable changes per PR (e.g., add a doc, update a component).
-- For visual changes, verify output in `build/` and include screenshots if possible.
-- Update `sidebars.js` or `_category_.json` when moving docs.
-
----
-If any section is unclear or missing, please provide feedback so this guide can be improved for future AI agents.
+If you'd like, I can expand this with concrete examples (MDX embedding, adding a new component, or a quick smoke test) — tell me which area to expand.
