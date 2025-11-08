@@ -72,7 +72,7 @@ function ProjectCard({ project }) {
       </div>
 
       <Link to={project.link} className={styles.projectLink}>
-        Ver Detalhes →
+        View details →
       </Link>
     </div>
   );
@@ -104,10 +104,10 @@ export default function Portfolio() {
         {/* Projects Section */}
         <div className="text--center margin-bottom--xl">
           <h2 className={styles.sectionTitle}>
-            Nossos <span className="gradient-text">Projetos</span>
+            Our <span className="gradient-text">Projects</span>
           </h2>
           <p className={styles.sectionSubtitle}>
-            Soluções inovadoras desenvolvidas com as melhores tecnologias
+            Innovative solutions built with modern technologies
           </p>
         </div>
 
@@ -120,7 +120,7 @@ export default function Portfolio() {
         {/* Testimonials Section */}
         <div className="text--center margin-top--xl margin-bottom--lg">
           <h2 className={styles.sectionTitle}>
-            O que dizem sobre nós
+            What people say about us
           </h2>
         </div>
 
