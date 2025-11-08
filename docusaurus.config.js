@@ -11,7 +11,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'MonaDocs',
-  tagline: 'Documentação Central da Monynha Softwares',
+  tagline: 'Central Documentation Hub for Monynha Softwares',
   // Use an SVG favicon for crisp rendering on modern browsers
   // If you need .ico for legacy support, add `static/img/favicon.ico` and update this line.
   favicon: 'img/favicon.svg',
@@ -94,25 +94,25 @@ const config = {
           // Explicit dropdown exposing main documentation areas so the mobile menu
           // shows all relevant links (projects, technologies, guidelines, etc.).
           {
-            label: 'Documentação',
+            label: 'Documentation',
             position: 'left',
             items: [
-              { to: '/docs/intro', label: 'Introdução' },
-              { to: '/docs/technologies/frontend-stack', label: 'Tecnologias' },
+              { to: '/docs/intro', label: 'Introduction' },
+              { to: '/docs/technologies/frontend-stack', label: 'Technologies' },
               { to: '/docs/guidelines/ux-guidelines', label: 'Guidelines' },
-              { to: '/docs/identity/brand-guidelines', label: 'Identidade' },
-              { to: '/docs/contribution/contributing', label: 'Contribuição' },
-              { to: '/docs/architecture/backend-architecture', label: 'Arquitetura' },
+              { to: '/docs/identity/brand-guidelines', label: 'Identity' },
+              { to: '/docs/contribution/contributing', label: 'Contribution' },
+              { to: '/docs/architecture/backend-architecture', label: 'Architecture' },
             ],
           },
           { to: '/blog', label: 'Blog', position: 'left' },
           {
-            label: 'Empresa',
+            label: 'Company',
             position: 'right',
             items: [
               { label: 'Monynha.com', href: 'https://monynha.com' },
-              { label: 'Projetos', href: 'https://monynha.com/projetos' },
-              { label: 'Portfólio', href: 'https://marcelo.monynha.com/portifolio' },
+              { label: 'Projects', href: 'https://monynha.com/projetos' },
+              { label: 'Portfolio', href: 'https://marcelo.monynha.com/portifolio' },
             ],
           },
           {
@@ -126,41 +126,41 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Documentação',
+            title: 'Documentation',
             items: [
               {
-                label: 'Introdução',
+                label: 'Introduction',
                 to: '/docs/intro',
               },
               {
-                label: 'Projetos',
+                label: 'Projects',
                 to: '/docs/projects/boteco-pro',
               },
               {
-                label: 'Tecnologias',
+                label: 'Technologies',
                 to: '/docs/technologies/typescript',
               },
             ],
           },
           {
-            title: 'Empresa',
+            title: 'Company',
             items: [
               {
                 label: 'Monynha.com',
                 href: 'https://monynha.com',
               },
               {
-                label: 'Projetos',
+                label: 'Projects',
                 href: 'https://monynha.com/projetos',
               },
               {
-                label: 'Portfólio',
+                label: 'Portfolio',
                 href: 'https://marcelo.monynha.com/portifolio',
               },
             ],
           },
           {
-            title: 'Comunidade',
+            title: 'Community',
             items: [
               {
                 label: 'Blog',
@@ -177,7 +177,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Monynha Softwares. Construído com Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Monynha Softwares. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,

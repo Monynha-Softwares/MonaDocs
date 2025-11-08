@@ -2,17 +2,17 @@
 sidebar_position: 1
 ---
 
-# Bem-vindo à Documentação da Mona
+# Welcome to MonaDocs
 
-Esta é a central de documentação da **Monynha Softwares**, contendo guias, padrões e informações sobre nossos projetos, tecnologias e processos.
+This is the central documentation hub for **Monynha Softwares**, containing guides, standards, and information about our projects, technologies, and processes.
 
-## O que você encontrará aqui
+## What you'll find here
 
-- **Projetos**: Documentação detalhada de cada projeto desenvolvido pela Mona.
-- **Tecnologias**: Guias sobre as tecnologias que utilizamos.
-- **Padrões Internos**: Normas de código, arquitetura e melhores práticas.
-- **Guias e Boas Práticas**: Tutoriais e recomendações para desenvolvimento.
-- **Documentação para Contribuidores**: Como contribuir com nossos projetos.
-- **Outros Temas**: Tópicos como UX, acessibilidade e dados.
+- **Projects**: Detailed documentation for each project developed by Mona.
+- **Technologies**: Guides about the technologies we use.
+- **Internal Standards**: Code norms, architecture, and best practices.
+- **Guides and Best Practices**: Tutorials and recommendations for development.
+- **Contributor Documentation**: How to contribute to our projects.
+- **Other Topics**: Topics like UX, accessibility, and data.
 
-Explore as seções no menu lateral para mais informações.
+Explore the sections in the sidebar for more information.

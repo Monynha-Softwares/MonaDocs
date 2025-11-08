@@ -20,13 +20,13 @@ const sidebars = {
     'intro',
     {
       type: 'category',
-      label: 'Projetos',
+      label: 'Projects',
       link: {
         type: 'generated-index',
-        description: 'Documentação dos projetos Monynha (visões gerais, stacks e guias).',
+        description: 'Documentation for Monynha Softwares projects: overviews, tech stacks, and guides.',
       },
       items: [
-        'projects/boteco-pro/index',
+        'projects/boteco-pro',
         'projects/artleo-creative-spaces/index',
         'projects/boteco-pt/index',
         'projects/facodi/index',
