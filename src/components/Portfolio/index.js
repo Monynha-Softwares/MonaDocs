@@ -131,6 +131,7 @@ export default function Portfolio() {
 
   const [selectedTech, setSelectedTech] = React.useState(null);
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [activeTitle, setActiveTitle] = React.useState(featured.title);
 
   const filtered = projects.filter((p) => p.title !== featured.title && (!selectedTech || p.technologies.includes(selectedTech)));
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
@@ -156,6 +157,16 @@ export default function Portfolio() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Keep activeTitle consistent with filters/pages: if active project not in current paged list, reset to first
+  React.useEffect(() => {
+    const existsInPaged = paged.some((p) => p.title === activeTitle);
+    if (!existsInPaged) {
+      const first = paged[0] || featured || projects[0];
+      if (first) setActiveTitle(first.title);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, selectedTech]);
+
   return (
     <section className={styles.portfolio}>
       <div className="container">
@@ -178,23 +189,70 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Featured */}
-        <div className={styles.featuredCard}>
-          <ProjectCard project={featured} />
-        </div>
-
-        {/* Grid */}
-        <div className={styles.projectsGrid}>
-          {paged.map((project) => (
-            <ProjectCard key={project.title} project={project} />
-          ))}
-        </div>
-
-        {/* Pagination */}
-        <div className={styles.pagination}>
-          <button className="button button--outline" onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1}>Previous</button>
-          <div className={styles.pageInfo}>Page {currentPage} of {totalPages}</div>
-          <button className="button button--primary" onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>Next</button>
+        {/* Two-column project selector similar to TechStack: left = list, right = preview */}
+        <div className={styles.twoColumnRow}>
+          <div className={styles.featuredColumn}>
+            <div className={styles.leftList}>
+              {paged.map((project) => (
+                <div
+                  key={project.title}
+                  className={`${styles.projectThumb} ${project.title === (typeof window !== 'undefined' ? null : '') ? '' : ''} ${project.title === null ? '' : ''}`}
+                >
+                  <div className={styles.projectThumbInner} onClick={() => {
+                    // set active to clicked project
+                    try { setActiveTitle(project.title); } catch (e) {}
+                  }}>
+                    <div className={styles.thumbHeader}>
+                      <div className={styles.projectIconSmall} style={{ backgroundColor: project.color }}>{project.icon}</div>
+                      <div className={styles.thumbMeta}>
+                        <h4 className={styles.thumbTitle}>{project.title}</h4>
+                        <div className={styles.thumbStatus}>{project.status}</div>
+                      </div>
+                    </div>
+                    <p className={styles.thumbDescription}>{project.description}</p>
+                  </div>
+                  <div className={styles.thumbActions}>
+                    <Link to={project.link} className="button button--link">View details →</Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className={styles.pagination}>
+              <button className="button button--outline" onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1}>Previous</button>
+              <div className={styles.pageInfo}>Page {currentPage} of {totalPages}</div>
+              <button className="button button--primary" onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>Next</button>
+            </div>
+          </div>
+          <div className={styles.gridColumn}>
+            {/* preview area for active project */}
+            <div className={styles.previewCard}>
+              {
+                (() => {
+                  const active = projects.find((p) => p.title === activeTitle) || featured || projects[0];
+                  return (
+                    <div>
+                      <div className={styles.projectHeader}>
+                        <div className={styles.projectIcon} style={{ backgroundColor: active.color }}>{active.icon}</div>
+                        <div className={styles.projectStatus}>{active.status}</div>
+                      </div>
+                      <h3 className={styles.projectTitle}>{active.title}</h3>
+                      <p className={styles.projectDescription}>{active.description}</p>
+                      <div className={styles.projectTech}>
+                        {active.technologies.map((tech) => {
+                          const mapped = TECH_SLUGS[tech];
+                          if (mapped) return (<Link key={tech} to={`/docs/technologies/${mapped}`} className={styles.techTag}>{tech}</Link>);
+                          return (<span key={tech} className={styles.techTag}>{tech}</span>);
+                        })}
+                      </div>
+                      <div style={{ marginTop: '1rem' }}>
+                        <Link to={active.link} className="button button--primary">View details →</Link>
+                      </div>
+                    </div>
+                  );
+                })()
+              }
+            </div>
+          </div>
         </div>
 
         {/* Testimonials Section */}

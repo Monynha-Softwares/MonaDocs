@@ -36,6 +36,23 @@
 }
 .featuredColumn { padding-right: 0.5rem; }
 .gridColumn { padding-left: 0.5rem; }
+.leftList { display:flex; flex-direction:column; gap:1rem; }
+.projectThumb {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #e6eef8;
+}
+.projectThumbInner { cursor: pointer; }
+.projectIconSmall { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; margin-right:0.75rem; }
+.thumbHeader { display:flex; align-items:center; gap:0.75rem; }
+.thumbTitle { margin:0; font-size:1.1rem; font-weight:700; }
+.thumbMeta { display:flex; gap:0.5rem; align-items:center; }
+.thumbStatus { background: var(--ifm-color-primary); color: white; padding:0.25rem 0.6rem; border-radius:999px; font-size:0.75rem; }
+.thumbDescription { color: var(--ifm-color-emphasis-600); margin-top:0.5rem; }
+.thumbActions { margin-top:0.5rem; }
+
+.previewCard { background:#f8fafc; border-radius:12px; padding:1.5rem; border:1px solid #e6eef8; }
 
 .filtersRow {
   display: flex;
