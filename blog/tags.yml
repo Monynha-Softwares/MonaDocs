@@ -32,3 +32,8 @@ best-practices:
   label: Best Practices
   permalink: /best-practices
   description: Engineering best practices and guidance
+
+archived:
+  label: Archived
+  permalink: /archived
+  description: Legacy or archived posts kept for history
