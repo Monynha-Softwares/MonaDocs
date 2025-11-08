@@ -10,6 +10,12 @@ The Twelve-Factor App is a methodology for building software-as-a-service apps t
 
 This post highlights each factor and gives short notes on how it applies to documentation sites like MonaDocs and to small-to-medium engineering teams.
 
+![Marcelo Santos](/img/marcelo-m7-avatar.svg)
+
+**Marcelo Santos**  
+Founder & Maintainer — MonaDocs  
+[LinkedIn](https://www.linkedin.com/in/marcelo-m7/) · [GitHub](https://github.com/marcelo-m7)
+
 1. Codebase
 
    - One codebase tracked in revision control, many deploys.

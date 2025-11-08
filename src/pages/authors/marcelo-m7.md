@@ -2,7 +2,7 @@
 title: Marcelo Santos
 ---
 
-![Marcelo Santos](/img/marcelo-m7-avatar.svg)
+<img src="/img/marcelo-m7-avatar.png" alt="Marcelo Santos" width="160" onerror="this.onerror=null;this.src='/img/marcelo-m7-avatar.svg'" />
 
 ### Marcelo Santos (marcelo-m7)
 

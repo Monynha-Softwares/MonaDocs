@@ -1,0 +1,21 @@
+.card {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background: var(--ifm-color-emphasis-0, #ffffff);
+  border: 1px solid var(--ifm-card-border-color, #e5e7eb);
+  padding: 0.75rem;
+  border-radius: 10px;
+}
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.meta { flex: 1; }
+.name { font-weight: 700; font-size: 1rem; }
+.title { font-size: 0.9rem; color: var(--ifm-color-emphasis-600); margin-bottom: 0.25rem; }
+.links { display:flex; gap:0.5rem; margin-top:0.25rem; }
+.links a { font-size:0.85rem; color: var(--ifm-color-primary); }
+.children { margin-top:0.5rem; }
