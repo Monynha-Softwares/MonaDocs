@@ -76,6 +76,11 @@ function listDocsInDir(dir) {
       }
     }
   }
+  // dedupe items (avoid duplicates when both index.md and index.mdx exist)
+  const uniqueItems = Array.from(new Set(items));
+  // replace items with unique list
+  items.length = 0;
+  uniqueItems.forEach((i) => items.push(i));
   // deterministic ordering: index first, then alpha
   items.sort((a, b) => {
     if (a.endsWith('/index') && !b.endsWith('/index')) return -1;

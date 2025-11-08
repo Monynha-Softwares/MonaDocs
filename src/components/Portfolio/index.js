@@ -205,8 +205,8 @@ export default function Portfolio() {
         </div>
 
         <div className={styles.testimonialsGrid}>
-          {contributors.map((person, index) => (
-            <ContributorCard key={index} person={person} />
+          {contributors.map((person) => (
+            <ContributorCard key={person.name} person={person} />
           ))}
         </div>
 
