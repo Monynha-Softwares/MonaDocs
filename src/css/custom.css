@@ -8,8 +8,8 @@
 :root {
   /* Monynha brand palette (preferred) */
   --ifm-color-primary: #2563EB; /* Monynha Blue */
-  --ifm-color-primary-dark: #1E4FBE;
-  --ifm-color-primary-darker: #183fa0;
+  --ifm-color-primary-dark: #62749e;
+  --ifm-color-primary-darker: #4118a0;
   --ifm-color-primary-darkest: #112d78;
   --ifm-color-primary-light: #4F8CFF;
   --ifm-color-primary-lighter: #8BB3FF;
