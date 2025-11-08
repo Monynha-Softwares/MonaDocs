@@ -43,18 +43,20 @@ const TECH_SLUGS = {
   'Coolify': 'coolify'
 };
 
-const testimonials = [
+const contributors = [
   {
-    name: 'Happy Customer',
-    role: 'Bar Owner',
-    content: 'Boteco Pro transformed how I run my business. Intuitive UI and complete feature set.',
-    avatar: '👤'
+    name: 'Tércio Barreto',
+    role: 'Contributor',
+    linkedin: 'https://www.linkedin.com/in/t%C3%A9rcio-barreto-40a840120/',
+    avatar: '👤',
+    bio: 'Full-stack developer and contributor to MonaDocs.'
   },
   {
-    name: 'Technology Partner',
-    role: 'Developer',
-    content: 'Great team and strong code quality. Modern technologies and solid practices in place.',
-    avatar: '👨‍💻'
+    name: 'Marcelo (marcelo-m7)',
+    role: 'Founder & Maintainer',
+    linkedin: 'https://www.linkedin.com/in/marcelo-m7/',
+    avatar: '👨‍💻',
+    bio: 'Lead developer and project maintainer.'
   }
 ];
 
@@ -97,19 +99,22 @@ function ProjectCard({ project }) {
   );
 }
 
-function TestimonialCard({ testimonial }) {
+function ContributorCard({ person }) {
   return (
     <div className={styles.testimonialCard}>
       <div className={styles.testimonialQuote}>
-        "{testimonial.content}"
+        {person.bio}
       </div>
       <div className={styles.testimonialAuthor}>
         <div className={styles.authorAvatar}>
-          {testimonial.avatar}
+          {person.avatar}
         </div>
         <div className={styles.authorInfo}>
-          <div className={styles.authorName}>{testimonial.name}</div>
-          <div className={styles.authorRole}>{testimonial.role}</div>
+          <div className={styles.authorName}>{person.name}</div>
+          <div className={styles.authorRole}>{person.role}</div>
+        </div>
+        <div>
+          <a className={styles.linkedinLink} href={person.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
         </div>
       </div>
     </div>
@@ -200,8 +205,8 @@ export default function Portfolio() {
         </div>
 
         <div className={styles.testimonialsGrid}>
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={index} testimonial={testimonial} />
+          {contributors.map((person, index) => (
+            <ContributorCard key={index} person={person} />
           ))}
         </div>
 

@@ -229,6 +229,18 @@
   color: var(--ifm-color-emphasis-600);
 }
 
+.linkedinLink {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  border: 1px solid var(--ifm-card-border-color, #e5e7eb);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+}
+.linkedinLink:hover { background: rgba(37,99,235,0.06); }
+
 .ctaSection {
   background: linear-gradient(135deg, var(--ifm-color-primary) 0%, var(--ifm-color-primary-dark) 100%);
   border-radius: 16px;
