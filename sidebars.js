@@ -26,14 +26,14 @@ const sidebars = {
         description: 'Documentação dos projetos Monynha (visões gerais, stacks e guias).',
       },
       items: [
-        'projetos/boteco-pro/index',
-        'projetos/artleo-creative-spaces/index',
-        'projetos/boteco-pt/index',
-        'projetos/facodi/index',
-        'projetos/monynha-com/index',
-        'projetos/monynha-online/index',
-        'projetos/monynha-tech/index',
-        'projetos/sweet-price/index'
+        'projects/boteco-pro/index',
+        'projects/artleo-creative-spaces/index',
+        'projects/boteco-pt/index',
+        'projects/facodi/index',
+        'projects/monynha-com/index',
+        'projects/monynha-online/index',
+        'projects/monynha-tech/index',
+        'projects/sweet-price/index'
       ]
     },
     {

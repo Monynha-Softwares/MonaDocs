@@ -1,18 +1,18 @@
 # MonynhaTech
 
-## Descrição
+## Description
 
 [https://monynha.tech](https://monynha.tech)
 
-## Tecnologias Utilizadas
+## Technologies
 
 - TypeScript
 
-## Repositório
+## Repository
 
 [GitHub: MonynhaTech](https://github.com/Monynha-Softwares/MonynhaTech)
 
-## Funcionalidades
+## Features
 
-- Plataforma tecnológica da Monynha
-- Recursos e ferramentas tech
+- Monynha technology platform
+- Tools and resources for developers

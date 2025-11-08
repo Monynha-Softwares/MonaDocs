@@ -1,18 +1,19 @@
 # ArtLeo Creative Spaces
 
-## Descrição
+## Description
 
 Art by Monynha
 
-## Tecnologias Utilizadas
+## Technologies
 
 - TypeScript
 
-## Repositório
+## Repository
 
 [GitHub: artleo-creative-spaces](https://github.com/Monynha-Softwares/artleo-creative-spaces)
 
-## Funcionalidades
+## Features
 
-- Espaços criativos e artísticos
-- Plataforma para expressão artística
+- Creative and artistic spaces platform
+- Platform for artistic expression
+

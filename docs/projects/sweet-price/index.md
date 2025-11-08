@@ -1,18 +1,18 @@
 # Sweet Price
 
-## Descrição
+## Description
 
 Supermarket price comparison app in Portugal. Currently supports: Pingo Doce and Continente supermarkets.
 
-## Tecnologias Utilizadas
+## Technologies
 
-- (A definir)
+- (TBD)
 
-## Repositório
+## Repository
 
 [GitHub: Sweet-Price](https://github.com/Monynha-Softwares/Sweet-Price)
 
-## Funcionalidades
+## Features
 
-- Comparação de preços em supermercados portugueses
-- Suporte para Pingo Doce e Continente
+- Price comparison for Portuguese supermarkets
+- Support for Pingo Doce and Continente

@@ -98,7 +98,6 @@ const config = {
             position: 'left',
             items: [
               { to: '/docs/intro', label: 'Introdução' },
-              { to: '/docs/projetos/boteco-pro', label: 'Projetos' },
               { to: '/docs/technologies/frontend-stack', label: 'Tecnologias' },
               { to: '/docs/guidelines/ux-guidelines', label: 'Guidelines' },
               { to: '/docs/identity/brand-guidelines', label: 'Identidade' },
@@ -135,11 +134,11 @@ const config = {
               },
               {
                 label: 'Projetos',
-                to: '/docs/projetos/boteco-pro',
+                to: '/docs/projects/boteco-pro',
               },
               {
                 label: 'Tecnologias',
-                to: '/docs/tecnologias/typescript',
+                to: '/docs/technologies/typescript',
               },
             ],
           },
