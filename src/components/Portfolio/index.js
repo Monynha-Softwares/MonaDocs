@@ -10,6 +10,7 @@ const projects = [
     technologies: ['Flutter', 'TypeScript', 'Convex'],
     status: 'In Development',
     link: '/docs/projects/boteco-pro',
+    featured: true,
     icon: '🍺',
     color: '#FF6B35'
   },
@@ -33,18 +34,29 @@ const projects = [
   }
 ];
 
-const testimonials = [
+const TECH_SLUGS = {
+  'TypeScript': 'typescript',
+  'Docker': 'docker-compose',
+  'React': 'frontend-stack',
+  'Flutter': 'flutter',
+  'Convex': 'convex',
+  'Coolify': 'coolify'
+};
+
+const contributors = [
   {
-    name: 'Happy Customer',
-    role: 'Bar Owner',
-    content: 'Boteco Pro transformed how I run my business. Intuitive UI and complete feature set.',
-    avatar: '👤'
+    name: 'Tércio Barreto',
+    role: 'Contributor',
+    linkedin: 'https://www.linkedin.com/in/t%C3%A9rcio-barreto-40a840120/',
+    avatar: '👤',
+    bio: 'Full-stack developer and contributor to MonaDocs.'
   },
   {
-    name: 'Technology Partner',
-    role: 'Developer',
-    content: 'Great team and strong code quality. Modern technologies and solid practices in place.',
-    avatar: '👨‍💻'
+    name: 'Marcelo (marcelo-m7)',
+    role: 'Founder & Maintainer',
+    linkedin: 'https://www.linkedin.com/in/marcelo-m7/',
+    avatar: '👨‍💻',
+    bio: 'Lead developer and project maintainer.'
   }
 ];
 
@@ -64,33 +76,45 @@ function ProjectCard({ project }) {
       <p className={styles.projectDescription}>{project.description}</p>
 
       <div className={styles.projectTech}>
-        {project.technologies.map((tech) => (
-          <span key={tech} className={styles.techTag}>
-            {tech}
-          </span>
-        ))}
+        {project.technologies.map((tech) => {
+          const mapped = TECH_SLUGS[tech];
+          if (mapped) {
+            return (
+              <Link key={tech} to={`/docs/technologies/${mapped}`} className={styles.techTag}>
+                {tech}
+              </Link>
+            );
+          }
+          // fallback: render as plain tag if there's no matching docs page
+          return (
+            <span key={tech} className={styles.techTag}>{tech}</span>
+          );
+        })}
       </div>
 
       <Link to={project.link} className={styles.projectLink}>
-        Ver Detalhes →
+        View details →
       </Link>
     </div>
   );
 }
 
-function TestimonialCard({ testimonial }) {
+function ContributorCard({ person }) {
   return (
     <div className={styles.testimonialCard}>
       <div className={styles.testimonialQuote}>
-        "{testimonial.content}"
+        {person.bio}
       </div>
       <div className={styles.testimonialAuthor}>
         <div className={styles.authorAvatar}>
-          {testimonial.avatar}
+          {person.avatar}
         </div>
         <div className={styles.authorInfo}>
-          <div className={styles.authorName}>{testimonial.name}</div>
-          <div className={styles.authorRole}>{testimonial.role}</div>
+          <div className={styles.authorName}>{person.name}</div>
+          <div className={styles.authorRole}>{person.role}</div>
+        </div>
+        <div>
+          <a className={styles.linkedinLink} href={person.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
         </div>
       </div>
     </div>
@@ -98,35 +122,232 @@ function TestimonialCard({ testimonial }) {
 }
 
 export default function Portfolio() {
+  // Featured + filters + pagination
+  const PAGE_SIZE = 6;
+  // compute available techs
+  const allTechs = Array.from(new Set(projects.flatMap((p) => p.technologies)));
+  // find featured project (first that has featured: true) or fallback to first
+  const featured = projects.find((p) => p.featured) || projects[0];
+
+  const [selectedTech, setSelectedTech] = React.useState(null);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [activeTitle, setActiveTitle] = React.useState(featured.title);
+
+  const filtered = projects.filter((p) => p.title !== featured.title && (!selectedTech || p.technologies.includes(selectedTech)));
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const paged = filtered.slice((currentPage - 1) * PAGE_SIZE, (currentPage - 1) * PAGE_SIZE + PAGE_SIZE);
+
+  function selectTech(t) {
+    const next = (selectedTech === t ? null : t);
+    setSelectedTech(next);
+    try { if (typeof window !== 'undefined') localStorage.setItem('portfolio_selected_tech', next || ''); } catch (e) {}
+    setCurrentPage(1);
+  }
+
+  // Read persisted tech filter on client mount
+  React.useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const v = localStorage.getItem('portfolio_selected_tech');
+        if (v) setSelectedTech(v);
+      }
+    } catch (e) {
+      // ignore
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // helper slugify for deep links
+  function slugify(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  }
+
+  // Read project deep-link from URL (?project=slug or #project=slug) on mount
+  React.useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        const qp = params.get('project');
+        let slug = qp || null;
+        if (!slug && window.location.hash) {
+          const m = window.location.hash.match(/project=([^&]+)/);
+          if (m) slug = decodeURIComponent(m[1]);
+        }
+        if (slug) {
+          const found = projects.find((p) => slugify(p.title) === slug);
+          if (found) setActiveTitle(found.title);
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Update URL when activeTitle changes (client only)
+  React.useEffect(() => {
+    try {
+      if (typeof window !== 'undefined' && activeTitle) {
+        const slug = slugify(activeTitle);
+        const params = new URLSearchParams(window.location.search);
+        params.set('project', slug);
+        const newUrl = `${window.location.pathname}?${params.toString()}` + window.location.hash;
+        window.history.replaceState({}, '', newUrl);
+      }
+    } catch (e) {}
+  }, [activeTitle]);
+
+  // Keep activeTitle consistent with filters/pages: if active project not in current paged list, reset to first
+  React.useEffect(() => {
+    const existsInPaged = paged.some((p) => p.title === activeTitle);
+    if (!existsInPaged) {
+      const first = paged[0] || featured || projects[0];
+      if (first) setActiveTitle(first.title);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, selectedTech]);
+
+  // Permalink copy button component (small, self-contained)
+  function PermalinkButton({ activeTitle, slugify }) {
+    const [copied, setCopied] = React.useState(false);
+    const copyPermalink = React.useCallback(async () => {
+      try {
+        if (typeof window === 'undefined') return;
+        const slug = slugify(activeTitle);
+        const params = new URLSearchParams(window.location.search);
+        params.set('project', slug);
+        const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(url);
+        } else {
+          // fallback
+          const ta = document.createElement('textarea');
+          ta.value = url;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1800);
+      } catch (e) {
+        // ignore or optionally show a toast
+        console.error('Failed to copy permalink', e);
+      }
+    }, [activeTitle, slugify]);
+
+    return (
+      <button type="button" aria-label="Copy permalink" className={`button button--secondary`} onClick={copyPermalink}>
+        {copied ? 'Copied!' : 'Copy link'}
+      </button>
+    );
+  }
+
   return (
     <section className={styles.portfolio}>
       <div className="container">
-        {/* Projects Section */}
         <div className="text--center margin-bottom--xl">
           <h2 className={styles.sectionTitle}>
-            Nossos <span className="gradient-text">Projetos</span>
+            Our <span className="gradient-text">Projects</span>
           </h2>
           <p className={styles.sectionSubtitle}>
-            Soluções inovadoras desenvolvidas com as melhores tecnologias
+            Innovative solutions built with modern technologies
           </p>
         </div>
 
-        <div className={styles.projectsGrid}>
-          {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
-          ))}
+        {/* Filters */}
+        <div className={styles.filtersRow}>
+          <div className={styles.filterGroup}>
+            <button className={`${styles.filterBtn} ${!selectedTech ? styles.activeFilter : ''}`} onClick={() => selectTech(null)}>All</button>
+            {allTechs.map((t) => (
+              <button key={t} className={`${styles.filterBtn} ${selectedTech === t ? styles.activeFilter : ''}`} onClick={() => selectTech(t)}>{t}</button>
+            ))}
+          </div>
+        </div>
+
+        {/* Two-column project selector similar to TechStack: left = list, right = preview */}
+        <div className={styles.twoColumnRow}>
+          <div className={styles.featuredColumn}>
+            <div className={styles.leftList}>
+              {paged.map((project) => {
+                const slug = slugify(project.title);
+                const isActive = project.title === activeTitle;
+                return (
+                  <div key={slug} className={styles.projectThumbWrapper}>
+                    <button
+                      className={`${styles.projectThumb} ${isActive ? styles.thumbActive : ''}`}
+                      onClick={() => setActiveTitle(project.title)}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTitle(project.title); } }}
+                      aria-pressed={isActive}
+                    >
+                      <div className={styles.projectThumbInner}>
+                        <div className={styles.thumbHeader}>
+                          <div className={styles.projectIconSmall} style={{ backgroundColor: project.color }}>{project.icon}</div>
+                          <div className={styles.thumbMeta}>
+                            <h4 className={styles.thumbTitle}>{project.title}</h4>
+                            <div className={styles.thumbStatus}>{project.status}</div>
+                          </div>
+                        </div>
+                        <p className={styles.thumbDescription}>{project.description}</p>
+                      </div>
+                    </button>
+                    <div className={styles.thumbActions}>
+                      <Link to={project.link} className="button button--link">View details →</Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className={styles.pagination}>
+              <button className="button button--outline" onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1}>Previous</button>
+              <div className={styles.pageInfo}>Page {currentPage} of {totalPages}</div>
+              <button className="button button--primary" onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>Next</button>
+            </div>
+          </div>
+          <div className={styles.gridColumn}>
+            {/* preview area for active project */}
+            <div className={styles.previewCard}>
+              {
+                (() => {
+                  const active = projects.find((p) => p.title === activeTitle) || featured || projects[0];
+                  return (
+                    <div>
+                      <div className={styles.projectHeader}>
+                        <div className={styles.projectIcon} style={{ backgroundColor: active.color }}>{active.icon}</div>
+                        <div className={styles.projectStatus}>{active.status}</div>
+                      </div>
+                      <h3 className={styles.projectTitle}>{active.title}</h3>
+                      <p className={styles.projectDescription}>{active.description}</p>
+                      <div className={styles.projectTech}>
+                        {active.technologies.map((tech) => {
+                          const mapped = TECH_SLUGS[tech];
+                          if (mapped) return (<Link key={tech} to={`/docs/technologies/${mapped}`} className={styles.techTag}>{tech}</Link>);
+                          return (<span key={tech} className={styles.techTag}>{tech}</span>);
+                        })}
+                      </div>
+                      <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                        <Link to={active.link} className="button button--primary">View details →</Link>
+                        {/* Permalink copy button */}
+                        <PermalinkButton activeTitle={active.title} slugify={slugify} />
+                      </div>
+                    </div>
+                  );
+                })()
+              }
+            </div>
+          </div>
         </div>
 
         {/* Testimonials Section */}
         <div className="text--center margin-top--xl margin-bottom--lg">
           <h2 className={styles.sectionTitle}>
-            O que dizem sobre nós
+            What people say about us
           </h2>
         </div>
 
         <div className={styles.testimonialsGrid}>
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={index} testimonial={testimonial} />
+          {contributors.map((person) => (
+            <ContributorCard key={person.name} person={person} />
           ))}
         </div>
 

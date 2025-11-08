@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import styles from './styles.module.css';
 
 // Simple client-side GitHub repo fetcher with localStorage cache.
@@ -40,101 +40,154 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
   const [loading, setLoading] = useState(true);
   const [cacheInfo, setCacheInfo] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  // Default to 'org' for SSR safety; read persisted preference in an effect (client-only)
+  const [source, setSource] = useState('org');
   // trigger a forced reload by bumping this counter (used after clearing cache)
   const [forceReloadCounter, setForceReloadCounter] = useState(0);
+  const mountedRef = useRef(true);
+
+  // Perform the core load logic in component scope so helper actions (refreshNow, clearCache)
+  // can call it without being hidden inside the effect.
+  async function performLoad({forceRefresh = false} = {}) {
+    setLoading(true);
+    setError(null);
+    const effectiveCacheKey = `${CACHE_KEY}_${source}`;
+    try {
+      // Check cache unless forced
+      const cached = localStorage.getItem(effectiveCacheKey);
+      if (!forceRefresh && cached) {
+        const parsed = JSON.parse(cached);
+        const age = Date.now() - parsed.ts;
+        setCacheInfo({ts: parsed.ts, age});
+        if (age < CACHE_TTL_MS) {
+          setRepos(parsed.data);
+          setLoading(false);
+          // still attempt background refresh but only if not forced
+          refreshInBackground(parsed.ts);
+          return;
+        }
+      }
+      // Fetch based on selected source
+      let merged = [];
+      if (source === 'org') {
+        const orgRepos = await fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`);
+        merged = orgRepos.filter((r) => showForks || !r.fork);
+      } else if (source === 'user') {
+        const userRepos = await fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`);
+        merged = userRepos.filter((r) => showForks || !r.fork);
+      }
+      merged = merged.sort((x, y) => new Date(y.updated_at) - new Date(x.updated_at));
+      localStorage.setItem(effectiveCacheKey, JSON.stringify({ts: Date.now(), data: merged}));
+      if (mountedRef.current) {
+        setRepos(merged);
+        setCacheInfo({ts: Date.now(), age: 0});
+      }
+    } catch (err) {
+      const cached = localStorage.getItem(effectiveCacheKey) || localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (mountedRef.current) setRepos(parsed.data);
+        setError('Using cached data due to API error: ' + err.message);
+      } else {
+        setError(err.message);
+      }
+    } finally {
+      if (mountedRef.current) setLoading(false);
+    }
+  }
+
+  async function refreshInBackground(oldTs) {
+    try {
+      const effectiveCacheKey = `${CACHE_KEY}_${source}`;
+      if (source === 'org') {
+        const orgRepos = await fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`);
+        const merged = orgRepos.filter((r) => showForks || !r.fork).sort((x, y) => new Date(y.updated_at) - new Date(x.updated_at));
+        localStorage.setItem(effectiveCacheKey, JSON.stringify({ts: Date.now(), data: merged}));
+        if (!repos && mountedRef.current) setRepos(merged);
+        if (mountedRef.current) setCacheInfo({ts: Date.now(), age: 0});
+      } else if (source === 'user') {
+        const userRepos = await fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`);
+        const merged = userRepos.filter((r) => showForks || !r.fork).sort((x, y) => new Date(y.updated_at) - new Date(x.updated_at));
+        localStorage.setItem(effectiveCacheKey, JSON.stringify({ts: Date.now(), data: merged}));
+        if (!repos && mountedRef.current) setRepos(merged);
+        if (mountedRef.current) setCacheInfo({ts: Date.now(), age: 0});
+      }
+    } catch (err) {
+      // ignore background errors
+    }
+  }
+
+  // Exposed action: force a refresh now (called from UI)
+  async function refreshNow() {
+    setError(null);
+    try {
+      setRefreshing(true);
+      await performLoad({forceRefresh: true});
+    } finally {
+      if (mountedRef.current) setRefreshing(false);
+    }
+  }
+
+  // Exposed action: clear cache and force reload via counter
+  function clearCache() {
+    try { localStorage.removeItem(`${CACHE_KEY}_${source}`); } catch (e) {}
+    setCacheInfo(null);
+    setRepos(null);
+    setForceReloadCounter((n) => n + 1);
+  }
+
+  function onSourceChange(e) {
+    const v = e.target.value;
+    setSource(v);
+    try { localStorage.setItem('mona_repos_source', v); } catch (e) {}
+    // clear and reload for new source
+    setCacheInfo(null);
+    setRepos(null);
+    setForceReloadCounter((n) => n + 1);
+  }
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function load({forceRefresh = false} = {}) {
-      setLoading(true);
-      setError(null);
-
-      try {
-        // Check cache unless forced
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (!forceRefresh && cached) {
-          const parsed = JSON.parse(cached);
-          const age = Date.now() - parsed.ts;
-          setCacheInfo({ts: parsed.ts, age});
-          if (age < CACHE_TTL_MS) {
-            setRepos(parsed.data);
-            setLoading(false);
-            // still attempt background refresh but only if not forced
-            refreshInBackground(parsed.ts);
-            return;
-          }
-        }
-
-        const [userRepos, orgRepos] = await Promise.all([
-          fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`),
-          fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`),
-        ]);
-
-        const merged = mergeAndDedupe(userRepos, orgRepos).filter((r) => showForks || !r.fork);
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ts: Date.now(), data: merged}));
-        if (!cancelled) {
-          setRepos(merged);
-          setCacheInfo({ts: Date.now(), age: 0});
-        }
-      } catch (err) {
-        // If rate-limited or other errors, surface message but try to use stale cache
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (cached) {
-          const parsed = JSON.parse(cached);
-          if (!cancelled) setRepos(parsed.data);
-          setError('Using cached data due to API error: ' + err.message);
-        } else {
-          setError(err.message);
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    async function refreshInBackground(oldTs) {
-      try {
-        const [userRepos, orgRepos] = await Promise.all([
-          fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`),
-          fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`),
-        ]);
-  const merged = mergeAndDedupe(userRepos, orgRepos).filter((r) => showForks || !r.fork);
-  localStorage.setItem(CACHE_KEY, JSON.stringify({ts: Date.now(), data: merged}));
-  // update UI only if there was no data yet
-  if (!repos) setRepos(merged);
-  setCacheInfo({ts: Date.now(), age: 0});
-      } catch (err) {
-        // ignore background errors
-        // console.warn('background refresh failed', err);
-      }
-    }
-
-    // Force refresh handler
-    async function refreshNow() {
-      setError(null);
-      try {
-        setRefreshing(true);
-        await load({forceRefresh: true});
-      } finally {
-        setRefreshing(false);
-      }
-    }
-
-    // Expose a small clear-cache helper by bumping a counter (causes effect to reload)
-    function clearCache() {
-      try {
-        localStorage.removeItem(CACHE_KEY);
-      } catch (e) {}
-      setCacheInfo(null);
-      setRepos(null);
-      // bump counter so effect re-runs and performs a fresh load
-      setForceReloadCounter((n) => n + 1);
-    }
-
-    load();
-    return () => { cancelled = true; };
+    mountedRef.current = true;
+    performLoad();
+    return () => { mountedRef.current = false; };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, org, showForks, forceReloadCounter]);
+  }, [user, org, showForks, forceReloadCounter, source]);
+
+  // Read persisted source from localStorage on the client only
+  useEffect(() => {
+    try {
+      // prefer URL query param if present, else localStorage
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        const ownerParam = params.get('owner'); // expected 'org' or 'user'
+        if (ownerParam === 'org' || ownerParam === 'user') {
+          if (ownerParam !== source) setSource(ownerParam);
+        } else {
+          const pref = localStorage.getItem('mona_repos_source');
+          if (pref && pref !== source) setSource(pref);
+        }
+      }
+    } catch (e) {
+      // ignore on SSR or if localStorage is unavailable
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // keep URL in sync when source changes (client only)
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        params.set('owner', source);
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.replaceState({}, '', newUrl);
+        try { localStorage.setItem('mona_repos_source', source); } catch (e) {}
+      }
+    } catch (e) {
+      // ignore
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [source]);
 
   if (loading && !repos) return <div className={styles.container}><p>Loading repositories...</p></div>;
   if (error && !repos) return <div className={styles.container}><p className={styles.error}>Error: {error}</p></div>;
@@ -169,7 +222,14 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
 
   return (
     <div className={styles.container}>
-      {renderCacheInfo()}
+        <div className={styles.sourceRow}>
+          <label className={styles.sourceLabel} htmlFor="repo-source-select">Source</label>
+          <select id="repo-source-select" value={source} onChange={onSourceChange} className={styles.sourceSelect} aria-label="Repository source">
+            <option value="org">Monynha-Softwares (organization)</option>
+            <option value="user">marcelo-m7 (user)</option>
+          </select>
+        </div>
+        {renderCacheInfo()}
       {error ? <div className={styles.warn}>⚠ {error}</div> : null}
       <div className={styles.grid}>
         {(repos || []).map((r) => (
