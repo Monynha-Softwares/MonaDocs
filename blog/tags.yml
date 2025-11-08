@@ -17,3 +17,18 @@ hola:
   label: Hola
   permalink: /hola
   description: Hola tag description
+
+architecture:
+  label: Architecture
+  permalink: /architecture
+  description: Architecture and system design articles
+
+twelve-factor:
+  label: Twelve-Factor
+  permalink: /twelve-factor
+  description: Posts about the Twelve-Factor App methodology
+
+best-practices:
+  label: Best Practices
+  permalink: /best-practices
+  description: Engineering best practices and guidance

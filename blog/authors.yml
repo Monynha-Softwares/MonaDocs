@@ -23,3 +23,13 @@ slorber:
     linkedin: sebastienlorber
     github: slorber
     newsletter: https://thisweekinreact.com
+
+marcelo-m7:
+  name: Marcelo Santos
+  title: Founder & Maintainer
+  url: https://www.linkedin.com/in/marcelo-m7/
+  image_url: https://github.com/marcelo-m7.png
+  page: true
+  socials:
+    linkedin: marcelo-m7
+    github: marcelo-m7

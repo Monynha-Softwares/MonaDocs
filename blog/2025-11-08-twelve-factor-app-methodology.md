@@ -1,10 +1,12 @@
 ---
 title: "Twelve-Factor App methodology — twelve quick rules for modern apps"
-authors: [slorber]
+authors: [marcelo-m7]
 tags: [architecture, twelve-factor, best-practices]
 ---
 
 The Twelve-Factor App is a methodology for building software-as-a-service apps that are portable, declarative, and suitable for modern cloud platforms. Originally described at https://12factor.net/ and summarized on https://en.wikipedia.org/wiki/Twelve-Factor_App_methodology, the twelve factors provide pragmatic guidance that applies to web apps, microservices, and even static/documentation sites that have runtime components.
+
+<!-- truncate -->
 
 This post highlights each factor and gives short notes on how it applies to documentation sites like MonaDocs and to small-to-medium engineering teams.
 
@@ -18,6 +20,14 @@ This post highlights each factor and gives short notes on how it applies to docu
    - Declare and isolate dependencies.
    - Use `package.json` + lockfile (yarn) and avoid relying on global packages during build. Our Docusaurus site expects dependencies installed via `yarn`.
 
+      Example (enforce node version in package.json):
+
+      ```json
+      {
+         "engines": { "node": ">=20" }
+      }
+      ```
+
 3. Config
 
    - Store config in the environment (env vars), not in code.
@@ -28,10 +38,30 @@ This post highlights each factor and gives short notes on how it applies to docu
    - Treat backing services (databases, caches, external APIs) as attached resources.
    - MonaDocs is mostly static, but client-side features (e.g., GitHub API calls in the `Repositories` component) must handle rate limits and be resilient when services are unavailable.
 
+      Example: guard fetches and use local cache with TTL:
+
+      ```js
+      // simple in-browser cache pattern
+      const key = 'mona_repos_cache_v1';
+      const cached = JSON.parse(localStorage.getItem(key) || 'null');
+      if (cached && Date.now() - cached.ts < 1000 * 60 * 60 * 6) {
+         return cached.data;
+      }
+      // otherwise fetch and persist
+      ```
+
 5. Build, release, run
 
    - Strictly separate build and run stages. `yarn build` produces static assets; `yarn serve` runs them.
    - Avoid embedding runtime-only code that executes during the build (e.g., `window` or `localStorage`) — guard such calls to keep the build portable.
+
+      Example guard used in the repo:
+
+      ```js
+      if (typeof window !== 'undefined') {
+         const v = localStorage.getItem('portfolio_selected_tech');
+      }
+      ```
 
 6. Processes
 
@@ -68,6 +98,12 @@ Practical checklist for applying Twelve-Factor to MonaDocs
 - For features that rely on external APIs (GitHub), implement local caching (we use `localStorage` with TTL) and graceful UI for rate-limit or offline errors.
 - Keep secrets out of the repo; use environment variables configured in CI for private deploys.
 - Add a small `scripts/` folder for admin tasks (link-checker, screenshot generator) that run with the same Node environment.
+
+Additional guidance and examples
+
+- Add a `<!-- truncate -->` in longer posts to create shorter previews on the blog index. MDX posts can use `{/* truncate */}`.
+- When adding tech links from `Portfolio` or other components, map the tech name to a docs slug (see `src/components/Portfolio/index.js` `TECH_SLUGS`) to avoid broken-link checks during build.
+
 
 Further reading
 
