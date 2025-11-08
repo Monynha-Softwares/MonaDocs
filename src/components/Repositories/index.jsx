@@ -156,13 +156,38 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
   // Read persisted source from localStorage on the client only
   useEffect(() => {
     try {
-      const pref = localStorage.getItem('mona_repos_source');
-      if (pref && pref !== source) setSource(pref);
+      // prefer URL query param if present, else localStorage
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        const ownerParam = params.get('owner'); // expected 'org' or 'user'
+        if (ownerParam === 'org' || ownerParam === 'user') {
+          if (ownerParam !== source) setSource(ownerParam);
+        } else {
+          const pref = localStorage.getItem('mona_repos_source');
+          if (pref && pref !== source) setSource(pref);
+        }
+      }
     } catch (e) {
       // ignore on SSR or if localStorage is unavailable
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // keep URL in sync when source changes (client only)
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        params.set('owner', source);
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.replaceState({}, '', newUrl);
+        try { localStorage.setItem('mona_repos_source', source); } catch (e) {}
+      }
+    } catch (e) {
+      // ignore
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [source]);
 
   if (loading && !repos) return <div className={styles.container}><p>Loading repositories...</p></div>;
   if (error && !repos) return <div className={styles.container}><p className={styles.error}>Error: {error}</p></div>;

@@ -10,6 +10,7 @@ const projects = [
     technologies: ['Flutter', 'TypeScript', 'Convex'],
     status: 'In Development',
     link: '/docs/projects/boteco-pro',
+    featured: true,
     icon: '🍺',
     color: '#FF6B35'
   },
@@ -131,9 +132,24 @@ export default function Portfolio() {
   const paged = filtered.slice((currentPage - 1) * PAGE_SIZE, (currentPage - 1) * PAGE_SIZE + PAGE_SIZE);
 
   function selectTech(t) {
-    setSelectedTech((prev) => (prev === t ? null : t));
+    const next = (selectedTech === t ? null : t);
+    setSelectedTech(next);
+    try { if (typeof window !== 'undefined') localStorage.setItem('portfolio_selected_tech', next || ''); } catch (e) {}
     setCurrentPage(1);
   }
+
+  // Read persisted tech filter on client mount
+  React.useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const v = localStorage.getItem('portfolio_selected_tech');
+        if (v) setSelectedTech(v);
+      }
+    } catch (e) {
+      // ignore
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className={styles.portfolio}>
