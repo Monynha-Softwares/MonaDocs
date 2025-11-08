@@ -89,3 +89,20 @@
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+.sourceRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.sourceLabel {
+  font-size: 0.9rem;
+  color: var(--ifm-color-gray-700, #374151);
+}
+.sourceSelect {
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--ifm-card-border-color, #e5e7eb);
+  background: white;
+}

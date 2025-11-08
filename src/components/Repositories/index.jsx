@@ -40,6 +40,8 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
   const [loading, setLoading] = useState(true);
   const [cacheInfo, setCacheInfo] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  // Default to 'org' for SSR safety; read persisted preference in an effect (client-only)
+  const [source, setSource] = useState('org');
   // trigger a forced reload by bumping this counter (used after clearing cache)
   const [forceReloadCounter, setForceReloadCounter] = useState(0);
   const mountedRef = useRef(true);
@@ -49,9 +51,10 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
   async function performLoad({forceRefresh = false} = {}) {
     setLoading(true);
     setError(null);
+    const effectiveCacheKey = `${CACHE_KEY}_${source}`;
     try {
       // Check cache unless forced
-      const cached = localStorage.getItem(CACHE_KEY);
+      const cached = localStorage.getItem(effectiveCacheKey);
       if (!forceRefresh && cached) {
         const parsed = JSON.parse(cached);
         const age = Date.now() - parsed.ts;
@@ -64,20 +67,23 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
           return;
         }
       }
-
-      const [userRepos, orgRepos] = await Promise.all([
-        fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`),
-        fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`),
-      ]);
-
-      const merged = mergeAndDedupe(userRepos, orgRepos).filter((r) => showForks || !r.fork);
-      localStorage.setItem(CACHE_KEY, JSON.stringify({ts: Date.now(), data: merged}));
+      // Fetch based on selected source
+      let merged = [];
+      if (source === 'org') {
+        const orgRepos = await fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`);
+        merged = orgRepos.filter((r) => showForks || !r.fork);
+      } else if (source === 'user') {
+        const userRepos = await fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`);
+        merged = userRepos.filter((r) => showForks || !r.fork);
+      }
+      merged = merged.sort((x, y) => new Date(y.updated_at) - new Date(x.updated_at));
+      localStorage.setItem(effectiveCacheKey, JSON.stringify({ts: Date.now(), data: merged}));
       if (mountedRef.current) {
         setRepos(merged);
         setCacheInfo({ts: Date.now(), age: 0});
       }
     } catch (err) {
-      const cached = localStorage.getItem(CACHE_KEY);
+      const cached = localStorage.getItem(effectiveCacheKey) || localStorage.getItem(CACHE_KEY);
       if (cached) {
         const parsed = JSON.parse(cached);
         if (mountedRef.current) setRepos(parsed.data);
@@ -92,15 +98,20 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
 
   async function refreshInBackground(oldTs) {
     try {
-      const [userRepos, orgRepos] = await Promise.all([
-        fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`),
-        fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`),
-      ]);
-      const merged = mergeAndDedupe(userRepos, orgRepos).filter((r) => showForks || !r.fork);
-      localStorage.setItem(CACHE_KEY, JSON.stringify({ts: Date.now(), data: merged}));
-      // update UI only if there was no data yet
-      if (!repos && mountedRef.current) setRepos(merged);
-      if (mountedRef.current) setCacheInfo({ts: Date.now(), age: 0});
+      const effectiveCacheKey = `${CACHE_KEY}_${source}`;
+      if (source === 'org') {
+        const orgRepos = await fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`);
+        const merged = orgRepos.filter((r) => showForks || !r.fork).sort((x, y) => new Date(y.updated_at) - new Date(x.updated_at));
+        localStorage.setItem(effectiveCacheKey, JSON.stringify({ts: Date.now(), data: merged}));
+        if (!repos && mountedRef.current) setRepos(merged);
+        if (mountedRef.current) setCacheInfo({ts: Date.now(), age: 0});
+      } else if (source === 'user') {
+        const userRepos = await fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`);
+        const merged = userRepos.filter((r) => showForks || !r.fork).sort((x, y) => new Date(y.updated_at) - new Date(x.updated_at));
+        localStorage.setItem(effectiveCacheKey, JSON.stringify({ts: Date.now(), data: merged}));
+        if (!repos && mountedRef.current) setRepos(merged);
+        if (mountedRef.current) setCacheInfo({ts: Date.now(), age: 0});
+      }
     } catch (err) {
       // ignore background errors
     }
@@ -119,7 +130,17 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
 
   // Exposed action: clear cache and force reload via counter
   function clearCache() {
-    try { localStorage.removeItem(CACHE_KEY); } catch (e) {}
+    try { localStorage.removeItem(`${CACHE_KEY}_${source}`); } catch (e) {}
+    setCacheInfo(null);
+    setRepos(null);
+    setForceReloadCounter((n) => n + 1);
+  }
+
+  function onSourceChange(e) {
+    const v = e.target.value;
+    setSource(v);
+    try { localStorage.setItem('mona_repos_source', v); } catch (e) {}
+    // clear and reload for new source
     setCacheInfo(null);
     setRepos(null);
     setForceReloadCounter((n) => n + 1);
@@ -130,7 +151,18 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
     performLoad();
     return () => { mountedRef.current = false; };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, org, showForks, forceReloadCounter]);
+  }, [user, org, showForks, forceReloadCounter, source]);
+
+  // Read persisted source from localStorage on the client only
+  useEffect(() => {
+    try {
+      const pref = localStorage.getItem('mona_repos_source');
+      if (pref && pref !== source) setSource(pref);
+    } catch (e) {
+      // ignore on SSR or if localStorage is unavailable
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading && !repos) return <div className={styles.container}><p>Loading repositories...</p></div>;
   if (error && !repos) return <div className={styles.container}><p className={styles.error}>Error: {error}</p></div>;
@@ -165,7 +197,14 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
 
   return (
     <div className={styles.container}>
-      {renderCacheInfo()}
+        <div className={styles.sourceRow}>
+          <label className={styles.sourceLabel} htmlFor="repo-source-select">Source</label>
+          <select id="repo-source-select" value={source} onChange={onSourceChange} className={styles.sourceSelect} aria-label="Repository source">
+            <option value="org">Monynha-Softwares (organization)</option>
+            <option value="user">marcelo-m7 (user)</option>
+          </select>
+        </div>
+        {renderCacheInfo()}
       {error ? <div className={styles.warn}>⚠ {error}</div> : null}
       <div className={styles.grid}>
         {(repos || []).map((r) => (

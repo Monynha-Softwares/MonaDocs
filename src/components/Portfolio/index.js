@@ -33,6 +33,15 @@ const projects = [
   }
 ];
 
+const TECH_SLUGS = {
+  'TypeScript': 'typescript',
+  'Docker': 'docker-compose',
+  'React': 'frontend-stack',
+  'Flutter': 'flutter',
+  'Convex': 'convex',
+  'Coolify': 'coolify'
+};
+
 const testimonials = [
   {
     name: 'Happy Customer',
@@ -64,11 +73,20 @@ function ProjectCard({ project }) {
       <p className={styles.projectDescription}>{project.description}</p>
 
       <div className={styles.projectTech}>
-        {project.technologies.map((tech) => (
-          <span key={tech} className={styles.techTag}>
-            {tech}
-          </span>
-        ))}
+        {project.technologies.map((tech) => {
+          const mapped = TECH_SLUGS[tech];
+          if (mapped) {
+            return (
+              <Link key={tech} to={`/docs/technologies/${mapped}`} className={styles.techTag}>
+                {tech}
+              </Link>
+            );
+          }
+          // fallback: render as plain tag if there's no matching docs page
+          return (
+            <span key={tech} className={styles.techTag}>{tech}</span>
+          );
+        })}
       </div>
 
       <Link to={project.link} className={styles.projectLink}>
