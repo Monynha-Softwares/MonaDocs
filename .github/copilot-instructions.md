@@ -20,71 +20,93 @@ This file gives concise, repository-specific guidance to an AI coding agent so i
 ## Development commands (explicit)
 
 Run locally (recommended, project README uses yarn):
+## Purpose
+
+This file gives concise, repository-specific guidance to an AI coding agent so it can be productive working on this Docusaurus documentation site.
+
+## Big picture
+
+- This repo is a Docusaurus v3 site (see `docusaurus.config.js`) using the classic preset. Content is split into `docs/` (documentation) and `blog/` (posts). React UI code lives in `src/` and static assets in `static/`.
+- Primary agent responsibilities: run the dev server, add/edit docs & blog posts (MD/MDX), update UI components/styles, manage sidebar and category metadata, build and deploy the site.
+
+## Key files & folders
+
+- `package.json` — scripts: `start` (dev), `build` (prod), `serve` (serve build), `deploy` (GitHub Pages). Node >= 20 is required (check `engines`).
+- `docusaurus.config.js` — global site config (baseUrl, organizationName, projectName, editUrl, navbar/footer). Verify `organizationName` / `projectName` before changing deploy targets.
+- `sidebars.js` — controls docs sidebar. Adding/moving docs often requires updating this file or the sidebar path used by the config.
+- `docs/` — markdown/MDX docs. Subfolders use `_category_.json` for grouping (see `docs/tutorial-basics/_category_.json`).
+- `blog/` — posts (MD/MDX) and metadata: `authors.yml`, `tags.yml`. Example: `blog/2021-08-01-mdx-blog-post.mdx`.
+- `src/components/` — React UI components used by pages (example: `src/components/HomepageFeatures/index.js`).
+- `src/css/custom.css` — global styling. Page-specific modules exist under `src/pages`.
+- `static/img/` and `docs/**/img/` — image assets. Use `static/img/` for global assets and relative `./img/...` inside docs for doc-scoped images.
+
+## Quick start (Windows / PowerShell)
+
+1. Install dependencies:
 
 ```powershell
 yarn
-yarn start   # runs the Docusaurus dev server (hot reload)
 ```
 
-Build for production:
+2. Run dev server (hot reload; default port 3000):
 
 ```powershell
-yarn build   # outputs static site to `build/`
+yarn start
 ```
 
-Serve a local production build:
+3. Build and preview production:
 
 ```powershell
+yarn build
 yarn serve
 ```
 
-Deploy (GitHub Pages example from README):
+4. Deploy to GitHub Pages (as provided in repo):
 
 ```powershell
-USE_SSH=true yarn deploy
+USE_SSH=true; yarn deploy
 # or without SSH
-GIT_USER=<your-username> yarn deploy
+GIT_USER=<your-username>; yarn deploy
 ```
 
-Node runtime: config requires Node >= 20 (see `package.json` `engines`). Use that when running CI or local dev.
-
-If the user prefers npm, substitute `npm run <script>` for `yarn <script>`.
+If you prefer npm, replace `yarn` with `npm run` for the named scripts.
 
 ## Project-specific conventions & patterns
 
-- Docs are written as Markdown or MDX and live under `docs/`. Category grouping uses `_category_.json` files (do not rename without updating `sidebars.js`).
-- Blog posts can be `.md` or `.mdx`; frontmatter controls `title`, `tags`, `authors`. Look at `blog/2021-08-01-mdx-blog-post.mdx` for an MDX example.
-- The site uses Docusaurus v3 with `future.v4: true`. Be cautious about v4 breaking changes if upgrading dependencies.
-- Styling: global styles in `src/css/custom.css`. Reusable UI components live in `src/components/` and follow plain React (no TypeScript present in codebase by default).
-- Image assets: prefer `static/img/` for global images and `docs/**/img/` for doc-scoped images. Use relative paths in Markdown (e.g., `./img/example.png`).
+- Docs grouping: each docs subfolder may include `_category_.json` that the site relies on. Don't rename or remove them without updating `sidebars.js`.
+- Images: place global images in `static/img/` and per-doc images in a `img/` folder next to the doc file; reference via `./img/foo.png` in Markdown.
+- UI: small reusable components live in `src/components/`. Use existing styles in `src/css/custom.css` and `src/components/*/styles.module.css` patterns.
+- MDX usage: examples exist in `docs/` and `blog/` — prefer MDX when embedding React components inside docs.
 
 ## Integration points & external dependencies
 
-- Docusaurus (packages in `dependencies`) — core site generator.
-- GitHub pages is the expected deployment target (deploy script present). Check `docusaurus.config.js` `organizationName`/`projectName` — they may be placeholders and should match the repo when configuring `editUrl` or deploying.
-- No explicit CI config in repo root was found; if adding CI, ensure Node >=20 and yarn install/build steps.
+- Docusaurus packages (check `package.json`): primary runtime. Avoid adding heavy runtime-only dependencies unless necessary for docs.
+- GitHub Pages is the default deploy target (deploy script present). Confirm `docusaurus.config.js` `organizationName` and `projectName` match the repo/org before changing `editUrl` or deploy settings.
+- No CI configuration was found in the repo root. If you add CI (GitHub Actions), ensure Node >= 20 and `yarn install && yarn build` steps.
 
-## Examples for common tasks (concrete)
+## Concrete examples (what to change and where)
 
-- Add a new doc page under `docs/tutorial-basics/` and include it in `sidebars.js` or let the `sidebarPath` auto-include based on current config.
-- Add a new blog post: create `blog/YYYY-MM-DD-title.md` with frontmatter; update `authors.yml` if introducing new authors.
-- Make a UI change: edit `src/components/HomepageFeatures/index.js` and `src/css/custom.css`, then `yarn start` to iterate.
+- Add a doc: create `docs/<section>/new-doc.md` (or `.mdx`) and add/update `sidebars.js` or rely on the configured automatic sidebar path.
+- Add blog post: `blog/YYYY-MM-DD-title.md` with YAML frontmatter (title, tags, authors). Update `blog/authors.yml` for new authors.
+- Edit homepage features: modify `src/components/HomepageFeatures/index.js` and `src/components/HomepageFeatures/styles.module.css`, then `yarn start` to hot-reload.
 
-## What to avoid / watch-outs
+## Notes & watch-outs
 
-- Do not assume `organizationName`/`projectName` in `docusaurus.config.js` are correct — they are template placeholders. Verify before changing deploy targets or `editUrl`.
-- This repo uses yarn commands in README; CI or scripts should also use Node >=20.
-- Docusaurus configuration runs in Node context (no browser globals) — avoid using browser APIs in `docusaurus.config.js`.
+- Docusaurus config runs in Node (no browser globals). Keep dynamic code safe for Node execution.
+- The repo uses Docusaurus v3 with `future.v4: true` — upgrading to v4 may require breaking changes; test locally.
+- Verify `organizationName` / `projectName` in `docusaurus.config.js` before deploying.
+- There are no automated tests found in the repo — treat code edits accordingly and do a local build verification (`yarn build && yarn serve`).
 
-## If you need to make edits
+## When editing/PR guidance for an AI agent
 
-- When adding or moving docs, update `sidebars.js` and run `yarn start` to confirm the sidebar and routing.
-- For deployment-related changes, run a full `yarn build` and `yarn serve` locally before pushing.
+- Make one small, testable change per PR (e.g., add a doc, update a component). Run `yarn start` or `yarn build` locally to validate.
+- Update `sidebars.js` or the relevant `_category_.json` if moving docs between folders.
+- For visual changes, include screenshots in the PR description and the `build/` output when applicable.
 
-## Questions for the maintainer
+## Contact / Maintainer questions
 
-- Should `docusaurus.config.js` `organizationName` and `projectName` be updated to the real GitHub org/repo? If yes, provide the correct values.
-- Is there a preferred CI/CD process (GitHub Actions, other) or a deploy target other than GitHub Pages?
+- Confirm values for `organizationName` and `projectName` in `docusaurus.config.js` if you plan to change deploy settings.
+- If you want CI configuration or GitHub Actions templates, specify Node version and preferred publish flow.
 
 ---
-If anything above is unclear or you want this adapted (more or fewer examples, or CI + GitHub Actions guidance), tell me what to include and I'll iterate.
+If you'd like, I can: (a) add a small GitHub Actions workflow that runs `yarn build` on PRs, or (b) generate a short CONTRIBUTING.md with doc/post guidelines—tell me which and I'll implement it.
