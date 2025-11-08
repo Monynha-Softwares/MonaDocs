@@ -46,10 +46,10 @@ const TECH_SLUGS = {
 const contributors = [
   {
     name: 'Tércio Barreto',
-    role: 'Contributor',
+    role: 'Contributor — Data & Operations',
     linkedin: 'https://www.linkedin.com/in/t%C3%A9rcio-barreto-40a840120/',
     avatar: '👤',
-    bio: 'Full-stack developer and contributor to MonaDocs.'
+    bio: `My analytical acumen and effective communication have been pivotal in maintaining integrity across business partner data, fostering a harmonious and productive work environment. With a foundation in human-centric management, I am now seeking to further apply these competencies, driving data-driven strategies that resonate with our core values and propel us towards innovative horizons.`
   },
   {
     name: 'Marcelo (marcelo-m7)',
