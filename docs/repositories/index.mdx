@@ -1,0 +1,17 @@
+---
+title: Repositories
+sidebar_position: 8
+---
+
+import Repositories from '@site/src/components/Repositories';
+
+# Repositories
+
+This page lists repositories discovered from the GitHub user `marcelo-m7` and the organization `Monynha-Softwares`. The fetching is done entirely in the browser using the public GitHub REST API.
+
+<Repositories user="marcelo-m7" org="Monynha-Softwares" />
+
+Notes:
+
+- Data is cached in `localStorage` for 6 hours to reduce requests and avoid hitting anonymous API rate limits.
+- If you need higher rate limits, provide a GitHub personal access token, but do not embed secrets in client-side code.

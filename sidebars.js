@@ -38,6 +38,17 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'Repositories',
+      link: {
+        type: 'generated-index',
+        description: 'Live list of GitHub repositories for the user and organization (client-side).',
+      },
+      items: [
+        'repositories/index'
+      ]
+    },
+    {
+      type: 'category',
       label: 'Technologies',
       link: {
         type: 'generated-index',
