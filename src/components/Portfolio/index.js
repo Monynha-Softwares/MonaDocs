@@ -116,10 +116,28 @@ function TestimonialCard({ testimonial }) {
 }
 
 export default function Portfolio() {
+  // Featured + filters + pagination
+  const PAGE_SIZE = 6;
+  // compute available techs
+  const allTechs = Array.from(new Set(projects.flatMap((p) => p.technologies)));
+  // find featured project (first that has featured: true) or fallback to first
+  const featured = projects.find((p) => p.featured) || projects[0];
+
+  const [selectedTech, setSelectedTech] = React.useState(null);
+  const [currentPage, setCurrentPage] = React.useState(1);
+
+  const filtered = projects.filter((p) => p.title !== featured.title && (!selectedTech || p.technologies.includes(selectedTech)));
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const paged = filtered.slice((currentPage - 1) * PAGE_SIZE, (currentPage - 1) * PAGE_SIZE + PAGE_SIZE);
+
+  function selectTech(t) {
+    setSelectedTech((prev) => (prev === t ? null : t));
+    setCurrentPage(1);
+  }
+
   return (
     <section className={styles.portfolio}>
       <div className="container">
-        {/* Projects Section */}
         <div className="text--center margin-bottom--xl">
           <h2 className={styles.sectionTitle}>
             Our <span className="gradient-text">Projects</span>
@@ -129,10 +147,33 @@ export default function Portfolio() {
           </p>
         </div>
 
+        {/* Filters */}
+        <div className={styles.filtersRow}>
+          <div className={styles.filterGroup}>
+            <button className={`${styles.filterBtn} ${!selectedTech ? styles.activeFilter : ''}`} onClick={() => selectTech(null)}>All</button>
+            {allTechs.map((t) => (
+              <button key={t} className={`${styles.filterBtn} ${selectedTech === t ? styles.activeFilter : ''}`} onClick={() => selectTech(t)}>{t}</button>
+            ))}
+          </div>
+        </div>
+
+        {/* Featured */}
+        <div className={styles.featuredCard}>
+          <ProjectCard project={featured} />
+        </div>
+
+        {/* Grid */}
         <div className={styles.projectsGrid}>
-          {projects.map((project) => (
+          {paged.map((project) => (
             <ProjectCard key={project.title} project={project} />
           ))}
+        </div>
+
+        {/* Pagination */}
+        <div className={styles.pagination}>
+          <button className="button button--outline" onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1}>Previous</button>
+          <div className={styles.pageInfo}>Page {currentPage} of {totalPages}</div>
+          <button className="button button--primary" onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>Next</button>
         </div>
 
         {/* Testimonials Section */}

@@ -21,6 +21,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DOCS_DIR = path.join(__dirname, 'docs');
 
+// Friendly overrides for some category labels shown in the sidebar.
+/** @type {{[key:string]: string}} */
+const LABEL_OVERRIDES = {
+  projects: 'Projects',
+  repositories: 'Repositories',
+  technologies: 'Technologies & Stack',
+  guidelines: 'Guidelines & Standards',
+  identity: 'Visual Identity & UI Components',
+  contribution: 'Contribution & Governance',
+  architecture: 'Architecture',
+};
+
+/**
+ * Read optional `_category_.json` metadata for a docs folder.
+ * @param {string} dir
+ */
 function readCategoryMeta(dir) {
   try {
     const p = path.join(DOCS_DIR, dir, '_category_.json');
@@ -28,9 +44,15 @@ function readCategoryMeta(dir) {
   } catch (e) {
     // ignore
   }
-  return { label: dir.replace(/-/g, ' ').replace(/\b\w/g, (s) => s.toUpperCase()) };
+  const defaultLabel = dir.replace(/-/g, ' ').replace(/\b\w/g, (s) => s.toUpperCase());
+  return { label: LABEL_OVERRIDES[dir] || defaultLabel };
 }
 
+/**
+ * List docs in a directory and normalize to sidebar ids.
+ * @param {string} dir
+ * @returns {string[]}
+ */
 function listDocsInDir(dir) {
   const base = path.join(DOCS_DIR, dir);
   if (!fs.existsSync(base)) return [];
@@ -74,6 +96,7 @@ const TOP_FOLDERS = [
   'architecture',
 ];
 
+/** @type {any[]} */
 const tutorialSidebar = ['intro'];
 
 for (const folder of TOP_FOLDERS) {
