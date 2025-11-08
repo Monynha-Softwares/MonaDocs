@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import styles from './styles.module.css';
 
 // Simple client-side GitHub repo fetcher with localStorage cache.
@@ -42,97 +42,93 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
   const [refreshing, setRefreshing] = useState(false);
   // trigger a forced reload by bumping this counter (used after clearing cache)
   const [forceReloadCounter, setForceReloadCounter] = useState(0);
+  const mountedRef = useRef(true);
+
+  // Perform the core load logic in component scope so helper actions (refreshNow, clearCache)
+  // can call it without being hidden inside the effect.
+  async function performLoad({forceRefresh = false} = {}) {
+    setLoading(true);
+    setError(null);
+    try {
+      // Check cache unless forced
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (!forceRefresh && cached) {
+        const parsed = JSON.parse(cached);
+        const age = Date.now() - parsed.ts;
+        setCacheInfo({ts: parsed.ts, age});
+        if (age < CACHE_TTL_MS) {
+          setRepos(parsed.data);
+          setLoading(false);
+          // still attempt background refresh but only if not forced
+          refreshInBackground(parsed.ts);
+          return;
+        }
+      }
+
+      const [userRepos, orgRepos] = await Promise.all([
+        fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`),
+        fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`),
+      ]);
+
+      const merged = mergeAndDedupe(userRepos, orgRepos).filter((r) => showForks || !r.fork);
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ts: Date.now(), data: merged}));
+      if (mountedRef.current) {
+        setRepos(merged);
+        setCacheInfo({ts: Date.now(), age: 0});
+      }
+    } catch (err) {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (mountedRef.current) setRepos(parsed.data);
+        setError('Using cached data due to API error: ' + err.message);
+      } else {
+        setError(err.message);
+      }
+    } finally {
+      if (mountedRef.current) setLoading(false);
+    }
+  }
+
+  async function refreshInBackground(oldTs) {
+    try {
+      const [userRepos, orgRepos] = await Promise.all([
+        fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`),
+        fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`),
+      ]);
+      const merged = mergeAndDedupe(userRepos, orgRepos).filter((r) => showForks || !r.fork);
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ts: Date.now(), data: merged}));
+      // update UI only if there was no data yet
+      if (!repos && mountedRef.current) setRepos(merged);
+      if (mountedRef.current) setCacheInfo({ts: Date.now(), age: 0});
+    } catch (err) {
+      // ignore background errors
+    }
+  }
+
+  // Exposed action: force a refresh now (called from UI)
+  async function refreshNow() {
+    setError(null);
+    try {
+      setRefreshing(true);
+      await performLoad({forceRefresh: true});
+    } finally {
+      if (mountedRef.current) setRefreshing(false);
+    }
+  }
+
+  // Exposed action: clear cache and force reload via counter
+  function clearCache() {
+    try { localStorage.removeItem(CACHE_KEY); } catch (e) {}
+    setCacheInfo(null);
+    setRepos(null);
+    setForceReloadCounter((n) => n + 1);
+  }
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function load({forceRefresh = false} = {}) {
-      setLoading(true);
-      setError(null);
-
-      try {
-        // Check cache unless forced
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (!forceRefresh && cached) {
-          const parsed = JSON.parse(cached);
-          const age = Date.now() - parsed.ts;
-          setCacheInfo({ts: parsed.ts, age});
-          if (age < CACHE_TTL_MS) {
-            setRepos(parsed.data);
-            setLoading(false);
-            // still attempt background refresh but only if not forced
-            refreshInBackground(parsed.ts);
-            return;
-          }
-        }
-
-        const [userRepos, orgRepos] = await Promise.all([
-          fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`),
-          fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`),
-        ]);
-
-        const merged = mergeAndDedupe(userRepos, orgRepos).filter((r) => showForks || !r.fork);
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ts: Date.now(), data: merged}));
-        if (!cancelled) {
-          setRepos(merged);
-          setCacheInfo({ts: Date.now(), age: 0});
-        }
-      } catch (err) {
-        // If rate-limited or other errors, surface message but try to use stale cache
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (cached) {
-          const parsed = JSON.parse(cached);
-          if (!cancelled) setRepos(parsed.data);
-          setError('Using cached data due to API error: ' + err.message);
-        } else {
-          setError(err.message);
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    async function refreshInBackground(oldTs) {
-      try {
-        const [userRepos, orgRepos] = await Promise.all([
-          fetchAllRepos(`https://api.github.com/users/${user}/repos?type=owner&sort=updated`),
-          fetchAllRepos(`https://api.github.com/orgs/${org}/repos?type=public&sort=updated`),
-        ]);
-  const merged = mergeAndDedupe(userRepos, orgRepos).filter((r) => showForks || !r.fork);
-  localStorage.setItem(CACHE_KEY, JSON.stringify({ts: Date.now(), data: merged}));
-  // update UI only if there was no data yet
-  if (!repos) setRepos(merged);
-  setCacheInfo({ts: Date.now(), age: 0});
-      } catch (err) {
-        // ignore background errors
-        // console.warn('background refresh failed', err);
-      }
-    }
-
-    // Force refresh handler
-    async function refreshNow() {
-      setError(null);
-      try {
-        setRefreshing(true);
-        await load({forceRefresh: true});
-      } finally {
-        setRefreshing(false);
-      }
-    }
-
-    // Expose a small clear-cache helper by bumping a counter (causes effect to reload)
-    function clearCache() {
-      try {
-        localStorage.removeItem(CACHE_KEY);
-      } catch (e) {}
-      setCacheInfo(null);
-      setRepos(null);
-      // bump counter so effect re-runs and performs a fresh load
-      setForceReloadCounter((n) => n + 1);
-    }
-
-    load();
-    return () => { cancelled = true; };
+    mountedRef.current = true;
+    performLoad();
+    return () => { mountedRef.current = false; };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, org, showForks, forceReloadCounter]);
 
