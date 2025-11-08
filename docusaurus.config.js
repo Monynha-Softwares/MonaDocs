@@ -10,9 +10,11 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  favicon: 'img/favicon.ico',
+  title: 'MonaDocs',
+  tagline: 'Documentação Central da Monynha Softwares',
+  // Use an SVG favicon for crisp rendering on modern browsers
+  // If you need .ico for legacy support, add `static/img/favicon.ico` and update this line.
+  favicon: 'img/favicon.svg',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -20,15 +22,15 @@ const config = {
   },
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://docs.monynha.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'Monynha-Softwares', // Usually your GitHub org/user name.
+  projectName: 'MonaDocs', // Usually your repo name.
 
   onBrokenLinks: 'throw',
 
@@ -50,7 +52,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/Monynha-Softwares/MonaDocs/edit/dev/',
         },
         blog: {
           showReadingTime: true,
@@ -61,7 +63,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/Monynha-Softwares/MonaDocs/edit/dev/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -83,21 +85,39 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: 'My Site',
+        title: 'MonaDocs',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'Monynha Softwares Logo',
           src: 'img/logo.svg',
         },
         items: [
+          // Explicit dropdown exposing main documentation areas so the mobile menu
+          // shows all relevant links (projects, technologies, guidelines, etc.).
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            label: 'Documentação',
             position: 'left',
-            label: 'Tutorial',
+            items: [
+              { to: '/docs/intro', label: 'Introdução' },
+              { to: '/docs/projects/boteco-pro', label: 'Projetos' },
+              { to: '/docs/technologies/frontend-stack', label: 'Tecnologias' },
+              { to: '/docs/guidelines/ux-guidelines', label: 'Guidelines' },
+              { to: '/docs/identity/brand-guidelines', label: 'Identidade' },
+              { to: '/docs/contribution/contributing', label: 'Contribuição' },
+              { to: '/docs/architecture/backend-architecture', label: 'Arquitetura' },
+            ],
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            label: 'Empresa',
+            position: 'right',
+            items: [
+              { label: 'Monynha.com', href: 'https://monynha.com' },
+              { label: 'Projetos', href: 'https://monynha.com/projetos' },
+              { label: 'Portfólio', href: 'https://marcelo.monynha.com/portifolio' },
+            ],
+          },
+          {
+            href: 'https://github.com/Monynha-Softwares',
             label: 'GitHub',
             position: 'right',
           },
@@ -107,33 +127,41 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Documentação',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Introdução',
                 to: '/docs/intro',
               },
+              {
+                label: 'Projetos',
+                to: '/docs/projetos/boteco-pro',
+              },
+              {
+                label: 'Tecnologias',
+                to: '/docs/tecnologias/typescript',
+              },
             ],
           },
           {
-            title: 'Community',
+            title: 'Empresa',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Monynha.com',
+                href: 'https://monynha.com',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                label: 'Projetos',
+                href: 'https://monynha.com/projetos',
               },
               {
-                label: 'X',
-                href: 'https://x.com/docusaurus',
+                label: 'Portfólio',
+                href: 'https://marcelo.monynha.com/portifolio',
               },
             ],
           },
           {
-            title: 'More',
+            title: 'Comunidade',
             items: [
               {
                 label: 'Blog',
@@ -141,12 +169,16 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/Monynha-Softwares',
+              },
+              {
+                label: 'Monynha Online',
+                href: 'https://monynha.online',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Monynha Softwares. Construído com Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,

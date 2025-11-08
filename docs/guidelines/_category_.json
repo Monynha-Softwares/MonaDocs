@@ -1,0 +1,8 @@
+{
+  "label": "Guidelines & Standards",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Unified guidelines ensuring quality and consistency across all Monynha Softwares projects, covering UX, accessibility, code conventions, and security."
+  }
+}
