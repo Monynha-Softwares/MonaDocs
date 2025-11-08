@@ -10,11 +10,11 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'MonaDocs',
+  title: 'Docs @Monynha-Softwares',
   tagline: 'Central Documentation Hub for Monynha Softwares',
   // Use an SVG favicon for crisp rendering on modern browsers
   // If you need .ico for legacy support, add `static/img/favicon.ico` and update this line.
-  favicon: 'img/favicon.svg',
+  favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
