@@ -1,3 +1,117 @@
+---
+title: "Boteco Pro — Project Overview"
+sidebar_position: 1
+---
+
+Boteco Pro is a management system for bars and restaurants. It centralizes orders, inventory, staff, and financial operations while providing real-time insights and integrations with common hospitality services.
+
+## Target audience
+
+- Bar and restaurant owners
+- Small to medium-sized hospitality businesses
+- Hospitality professionals looking to digitize operations
+
+## Problem solved
+
+Boteco Pro addresses common hospitality pain points:
+
+- Manual order tracking and inventory mistakes
+- Inefficient or delayed financial reporting
+- Lack of real-time business metrics and insights
+- Fragmented integrations with POS and payment systems
+
+## Tech stack & architecture
+
+### Core technologies
+
+- **Frontend**: Flutter (cross-platform mobile)
+- **Backend**: Convex (real-time services and sync)
+- **Database**: Convex built-in/document-store features
+- **State management**: Provider pattern (Flutter)
+
+### Architecture overview
+
+- Mobile app (Flutter) communicates with Convex for real-time updates.
+- Offline-first design with local persistence and background sync.
+- RESTful APIs for third-party integrations (payment gateways, POS, analytics).
+
+## Integration points
+
+- Payment gateways (consider PCI/security requirements).
+- POS systems (inventory / orders synchronization).
+- Analytics and reporting tools.
+
+## Features & roadmap
+
+### Current (v1.0)
+
+- Real-time order management
+- Inventory control with low-stock alerts
+- Financial summaries (daily/weekly/monthly)
+- Customer profiles and order history
+- Basic staff/role management
+
+### Planned
+
+- Advanced analytics dashboards
+- Loyalty / rewards system
+- Multi-location management
+- Web-based ordering integration
+
+## Development status
+
+- Current phase: Beta testing with select partners
+- Next milestone: v1.1 (enhanced reporting)
+- Target for full v1.0: Q1 2026
+
+## Setup & local development
+
+### Prerequisites
+
+- Flutter SDK (3.x+)
+- Dart SDK (2.19+)
+- Convex account / project setup
+
+### Quick start
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/Monynha-Softwares/Boteco-Pro.git
+cd boteco-pro
+```
+
+1. Install dependencies
+
+```bash
+flutter pub get
+```
+
+1. Configure Convex (example)
+
+```bash
+npx convex dev --once
+```
+
+1. Run the app
+
+```bash
+flutter run
+```
+
+### Environment
+
+Create a `.env` (or use your preferred env method):
+
+```bash
+CONVEX_URL=your_convex_deployment_url
+API_KEY=your_api_key
+```
+
+## Contributing
+
+Follow the general Monynha contribution guidelines and testing requirements. For repository-level notes, see the [general contribution guidelines](../contribution/contributing.md).
+
 # Boteco Pro – Project Overview------
 
 
@@ -72,320 +186,116 @@ Boteco Pro addresses the common challenges faced by hospitality businesses:Botec
 
 - Manual order tracking and inventory management- Inefficient financial reporting
 
-- Payment gateway integrations
+---
+title: "Boteco Pro — Project Overview"
+sidebar_position: 1
+---
 
-- Inventory management systems- Inefficient financial reporting- Lack of real-time business insights
+Boteco Pro is a management system for bars and restaurants. It aims to centralize orders, inventory, staff and financial operations while providing real-time insights and integrations with common hospitality services.
 
-- POS system compatibility
+## Target audience
 
-- Analytics and reporting tools- Lack of real-time business insights- Difficulty in managing customer relationships
+- Bar and restaurant owners
+- Small to medium-sized hospitality businesses
+- Hospitality professionals looking to digitize operations
 
+## Problem solved
 
+Boteco Pro addresses common hospitality pain points:
 
-## Features & Roadmap- Difficulty in managing customer relationships
+- Manual order tracking and inventory mistakes
+- Inefficient or delayed financial reporting
+- Lack of real-time business metrics and insights
+- Fragmented integrations with POS and payment systems
 
+## Tech stack & architecture
 
+### Core technologies
 
-### Current Features (v1.0)## Tech Stack & Architecture
+- **Frontend**: Flutter (cross-platform mobile)
+- **Backend**: Convex (real-time services and sync)
+- **Database**: Convex built-in/document-store features
+- **State management**: Provider pattern (Flutter)
 
+### Architecture overview
 
+- Mobile app (Flutter) communicates with Convex for real-time updates
+- Offline-first design with local persistence and background sync
+- RESTful APIs for third-party integrations (payment gateways, POS, analytics)
 
-- **Order Management**: Real-time order tracking and processing## Tech Stack & Architecture
+## Integration points
 
-- **Inventory Control**: Stock monitoring with low-stock alerts
+- Payment gateways (PCI considerations)
+- POS systems (inventory / orders sync)
+- Analytics and reporting tools
 
-- **Financial Reports**: Daily, weekly, and monthly financial summaries### Core Technologies
+## Features & roadmap
 
-- **Customer Management**: Customer profiles and order history
+### Current (v1.0)
 
-- **Staff Management**: Employee scheduling and role management### Core Technologies- **Frontend**: Flutter for cross-platform mobile application
+- Real-time order management
+- Inventory control with low-stock alerts
+- Financial summaries (daily/weekly/monthly)
+- Customer profiles and order history
+- Basic staff/role management
 
+### Planned
 
+- Advanced analytics dashboards
+- Loyalty / rewards system
+- Multi-location management
+- Web-based ordering integration
 
-### Planned Features- **Backend**: Convex for real-time backend services
+## Development status
 
+- Current phase: Beta testing with select partners
+- Next milestone: v1.1 (enhanced reporting)
+- Target for full v1.0: Q1 2026
 
-
-- **Advanced Analytics**: Business intelligence dashboards- **Frontend**: Flutter for cross-platform mobile application- **Database**: Integrated database solutions within Convex
-
-- **Loyalty Program**: Customer rewards and retention system
-
-- **Online Ordering**: Web-based ordering system integration- **Backend**: Convex for real-time backend services- **State Management**: Provider pattern with Flutter
-
-- **Multi-location Support**: Management of multiple business locations
-
-- **Advanced Reporting**: Custom report generation and export- **Database**: Integrated database solutions within Convex
-
-
-
-### Development Status- **State Management**: Provider pattern with Flutter### Architecture Components
-
-
-
-- **Current Phase**: Beta testing with select partners- **Mobile App**: Cross-platform Flutter application for iOS and Android
-
-- **Next Milestone**: v1.1 release with enhanced reporting features
-
-- **Timeline**: Full v1.0 release planned for Q1 2026### Architecture Components- **Real-time Backend**: Convex handles real-time data synchronization
-
-
-
-## Setup & Usage- **Offline Support**: Local data persistence for offline operations
-
-
-
-### Prerequisites- **Mobile App**: Cross-platform Flutter application for iOS and Android- **API Integration**: RESTful APIs for third-party integrations
-
-
-
-- Flutter SDK (version 3.0 or higher)- **Real-time Backend**: Convex handles real-time data synchronization
-
-- Dart SDK (version 2.19 or higher)
-
-- Convex account and project setup- **Offline Support**: Local data persistence for offline operations### Integration Points
-
-- Mobile device or emulator for testing
-
-- **API Integration**: RESTful APIs for third-party integrations- Payment gateway integrations
-
-### Local Development Setup
-
-- Inventory management systems
-
-1. **Clone the repository**
-
-### Integration Points- POS system compatibility
-
-   ```bash
-
-   git clone https://github.com/Monynha-Softwares/Boteco-Pro.git- Analytics and reporting tools
-
-   cd boteco-pro
-
-   ```- Payment gateway integrations
-
-
-
-2. **Install dependencies**- Inventory management systems## Features & Roadmap
-
-
-
-   ```bash- POS system compatibility
-
-   flutter pub get
-
-   ```- Analytics and reporting tools### Current Features (v1.0)
-
-
-
-3. **Configure Convex**- **Order Management**: Real-time order tracking and processing
-
-
-
-   ```bash## Features & Roadmap- **Inventory Control**: Stock monitoring with low-stock alerts
-
-   npx convex dev --once
-
-   ```- **Financial Reports**: Daily, weekly, and monthly financial summaries
-
-
-
-4. **Run the application**### Current Features (v1.0)- **Customer Management**: Customer profiles and order history
-
-
-
-   ```bash- **Staff Management**: Employee scheduling and role management
-
-   flutter run
-
-   ```- **Order Management**: Real-time order tracking and processing
-
-
-
-### Environment Configuration- **Inventory Control**: Stock monitoring with low-stock alerts### Planned Features
-
-
-
-Create a `.env` file with the following variables:- **Financial Reports**: Daily, weekly, and monthly financial summaries- **Advanced Analytics**: Business intelligence dashboards
-
-
-
-```- **Customer Management**: Customer profiles and order history- **Loyalty Program**: Customer rewards and retention system
-
-CONVEX_URL=your_convex_deployment_url
-
-API_KEY=your_api_key- **Staff Management**: Employee scheduling and role management- **Online Ordering**: Web-based ordering system integration
-
-```
-
-- **Multi-location Support**: Management of multiple business locations
-
-## Contributing to Boteco Pro
-
-### Planned Features- **Advanced Reporting**: Custom report generation and export
-
-### Development Guidelines
-
-
-
-- Follow Flutter best practices and conventions
-
-- Use the established code style (enforced by analysis_options.yaml)- **Advanced Analytics**: Business intelligence dashboards### Development Status
-
-- Write comprehensive tests for new features
-
-- Document all public APIs and components- **Loyalty Program**: Customer rewards and retention system- **Current Phase**: Beta testing with select partners
-
-
-
-### Specific Contribution Notes- **Online Ordering**: Web-based ordering system integration- **Next Milestone**: v1.1 release with enhanced reporting features
-
-
-
-- **UI/UX Changes**: All interface changes must be reviewed by the design team- **Multi-location Support**: Management of multiple business locations- **Timeline**: Full v1.0 release planned for Q1 2026
-
-- **Database Schema**: Schema changes require approval from the backend team
-
-- **Performance**: New features must not degrade app performance- **Advanced Reporting**: Custom report generation and export
-
-- **Security**: All data handling must follow security guidelines
-
-## Setup & Usage
-
-### Testing Requirements
-
-### Development Status
-
-- Unit test coverage: minimum 80%
-
-- Integration tests for critical user flows### Prerequisites
-
-- Manual testing on both iOS and Android platforms
-
-- **Current Phase**: Beta testing with select partners- Flutter SDK (version 3.0 or higher)
-
-For more information about contributing to Monynha Softwares projects, see the [general contribution guidelines](../contribution/contributing.md).
-- **Next Milestone**: v1.1 release with enhanced reporting features- Dart SDK (version 2.19 or higher)
-
-- **Timeline**: Full v1.0 release planned for Q1 2026- Convex account and project setup
-
-- Mobile device or emulator for testing
-
-## Setup & Usage
-
-### Local Development Setup
+## Setup & local development
 
 ### Prerequisites
 
-1. **Clone the repository**
+- Flutter SDK (3.x+)
+- Dart SDK (2.19+)
+- Convex account / project setup
 
-- Flutter SDK (version 3.0 or higher)   ```bash
+### Quick start
 
-- Dart SDK (version 2.19 or higher)   git clone https://github.com/Monynha-Softwares/Boteco-Pro.git
+1. Clone the repository
 
-- Convex account and project setup   cd boteco-pro
-
-- Mobile device or emulator for testing   ```
-
-
-
-### Local Development Setup2. **Install dependencies**
-
-   ```bash
-
-1. **Clone the repository**   flutter pub get
-
-   ```
-
-   ```bash
-
-   git clone https://github.com/Monynha-Softwares/Boteco-Pro.git3. **Configure Convex**
-
-   cd boteco-pro   ```bash
-
-   ```   npx convex dev --once
-
-   ```
-
-2. **Install dependencies**
-
-4. **Run the application**
-
-   ```bash   ```bash
-
-   flutter pub get   flutter run
-
-   ```   ```
-
-
-
-3. **Configure Convex**### Environment Configuration
-
-Create a `.env` file with the following variables:
-
-   ```bash```
-
-   npx convex dev --onceCONVEX_URL=your_convex_deployment_url
-
-   ```API_KEY=your_api_key
-
+```bash
+git clone https://github.com/Monynha-Softwares/Boteco-Pro.git
+cd boteco-pro
 ```
 
-4. **Run the application**
+2. Install dependencies
 
-## Contributing to Boteco Pro
+```bash
+flutter pub get
+```
 
-   ```bash
+3. Configure Convex (example)
 
-   flutter run### Development Guidelines
+```bash
+npx convex dev --once
+```
 
-   ```- Follow Flutter best practices and conventions
+4. Run the app
 
-- Use the established code style (enforced by analysis_options.yaml)
+```bash
+flutter run
+```
 
-### Environment Configuration- Write comprehensive tests for new features
+### Environment
 
-- Document all public APIs and components
+Create a `.env` (or otherwise set env vars):
 
-Create a `.env` file with the following variables:
+```
+CONVEX_URL=your_convex_deployment_url
+API_KEY=your_api_key
+```
 
-### Specific Contribution Notes
+## Contributing
 
-```- **UI/UX Changes**: All interface changes must be reviewed by the design team
-
-CONVEX_URL=your_convex_deployment_url- **Database Schema**: Schema changes require approval from the backend team
-
-API_KEY=your_api_key- **Performance**: New features must not degrade app performance
-
-```- **Security**: All data handling must follow security guidelines
-
-
-
-## Contributing to Boteco Pro### Testing Requirements
-
-- Unit test coverage: minimum 80%
-
-### Development Guidelines- Integration tests for critical user flows
-
-- Manual testing on both iOS and Android platforms
-
-- Follow Flutter best practices and conventions
-
-- Use the established code style (enforced by analysis_options.yaml)For more information about contributing to Monynha Softwares projects, see the [general contribution guidelines](../contribution/contributing.md).
-- Write comprehensive tests for new features
-- Document all public APIs and components
-
-### Specific Contribution Notes
-
-- **UI/UX Changes**: All interface changes must be reviewed by the design team
-- **Database Schema**: Schema changes require approval from the backend team
-- **Performance**: New features must not degrade app performance
-- **Security**: All data handling must follow security guidelines
-
-### Testing Requirements
-
-- Unit test coverage: minimum 80%
-- Integration tests for critical user flows
-- Manual testing on both iOS and Android platforms
-
-For more information about contributing to Monynha Softwares projects, see the [general contribution guidelines](../contribution/contributing.md).
+Follow the general Monynha contribution guidelines and testing requirements. For repository-level notes, see the [general contribution guidelines](../contribution/contributing.md).
