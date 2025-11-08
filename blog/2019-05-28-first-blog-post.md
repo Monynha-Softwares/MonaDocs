@@ -1,5 +1,6 @@
 ---
 title: Removed example post
+slug: first-blog-post-legacy
 authors: [slorber]
 tags: [archived]
 draft: true
