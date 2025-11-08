@@ -204,7 +204,7 @@ Open → Triaged → Accepted → In Progress → Review → Closed
 
 #### Reporting Process
 
-1. **Contact**: Report violations to conduct@monynha.com
+1. **Contact**: Report violations to hello@monynha.com
 2. **Investigation**: Core team investigates reports
 3. **Resolution**: Appropriate action taken
 4. **Communication**: Outcome communicated to involved parties

@@ -110,9 +110,9 @@ const config = {
             label: 'Company',
             position: 'right',
             items: [
+              { label: 'Portfolio', href: 'https://marcelo.monynha.com/portfolio' },
+              { label: 'Projects', href: 'https://monynha.com/projects' },
               { label: 'Monynha.com', href: 'https://monynha.com' },
-              { label: 'Projects', href: 'https://monynha.com/projetos' },
-              { label: 'Portfolio', href: 'https://marcelo.monynha.com/portifolio' },
             ],
           },
           {
@@ -151,11 +151,11 @@ const config = {
               },
               {
                 label: 'Projects',
-                href: 'https://monynha.com/projetos',
+                href: 'https://monynha.com/projects',
               },
               {
                 label: 'Portfolio',
-                href: 'https://marcelo.monynha.com/portifolio',
+                href: 'https://marcelo.monynha.com/portfolio',
               },
             ],
           },

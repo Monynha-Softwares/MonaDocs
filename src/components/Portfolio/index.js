@@ -135,7 +135,7 @@ export default function Portfolio() {
           <h3>Pronto para inovar com a gente?</h3>
           <p>Entre em contato e vamos discutir seu próximo projeto</p>
           <div className={styles.ctaButtons}>
-            <Link to="https://monynha.com" className="button button--primary button--lg">
+            <Link to="https://monynha.com/contact" className="button button--primary button--lg">
               Falar com a Equipe
             </Link>
             <Link to="/docs/intro" className="button button--outline button--lg">

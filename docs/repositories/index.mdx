@@ -5,11 +5,34 @@ sidebar_position: 8
 
 import Repositories from '@site/src/components/Repositories';
 
+import React from 'react';
+
 # Repositories
 
 This page lists repositories discovered from the GitHub user `marcelo-m7` and the organization `Monynha-Softwares`. The fetching is done entirely in the browser using the public GitHub REST API.
 
-<Repositories user="marcelo-m7" org="Monynha-Softwares" />
+The page accepts optional query parameters in the URL:
+
+- `mode`: `user` (show only user repos), `org` (show only organization repos), or `both` (default)
+- `showForks`: `1` or `true` to include forked repos
+
+Examples:
+
+- `/docs/repositories?mode=user` — show only `marcelo-m7` repos
+- `/docs/repositories?mode=org&showForks=1` — show only `Monynha-Softwares` repos including forks
+
+export function RepositoryPageWrapper() {
+	const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams('');
+	const mode = params.get('mode') || 'both';
+	const showForks = params.get('showForks') === '1' || params.get('showForks') === 'true';
+	let user = 'marcelo-m7';
+	let org = 'Monynha-Softwares';
+	if (mode === 'org') user = null;
+	if (mode === 'user') org = null;
+	return <Repositories user={user} org={org} showForks={showForks} />;
+}
+
+<RepositoryPageWrapper />
 
 Notes:
 

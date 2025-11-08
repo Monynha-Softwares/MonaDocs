@@ -39,6 +39,7 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cacheInfo, setCacheInfo] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -109,7 +110,12 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
     // Force refresh handler
     async function refreshNow() {
       setError(null);
-      await load({forceRefresh: true});
+      try {
+        setRefreshing(true);
+        await load({forceRefresh: true});
+      } finally {
+        setRefreshing(false);
+      }
     }
 
     load();
@@ -136,7 +142,10 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
       <div className={styles.cacheBar}>
         <div className={styles.cacheInfo}>Cached: {when} • refresh in ~{ttlMinutes}m</div>
         <div>
-          <button className={styles.refreshBtn} onClick={refreshNow} disabled={loading}>Refresh now</button>
+          <button className={styles.refreshBtn} onClick={refreshNow} disabled={loading || refreshing}>
+            {refreshing ? <span className={styles.spinner} aria-hidden="true"/> : null}
+            {refreshing ? 'Refreshing...' : 'Refresh now'}
+          </button>
         </div>
       </div>
     );
