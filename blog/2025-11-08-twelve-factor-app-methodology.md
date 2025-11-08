@@ -1,5 +1,6 @@
 ---
 title: "Twelve-Factor App methodology — twelve quick rules for modern apps"
+slug: twelve-factor-app-methodology-legacy
 authors: [marcelo-m7]
 tags: [architecture, twelve-factor, best-practices]
 draft: true
