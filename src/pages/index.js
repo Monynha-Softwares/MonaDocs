@@ -33,9 +33,12 @@ function HomepageHeader() {
               to="/docs/intro">
               🚀 Explore Documentation
             </Link>
+            {/* make Visit Website use same personalized CTA style */}
             <Link
-              className="button button--outline button--lg"
-              to="https://monynha.com">
+              className="button button--secondary button--lg"
+              to="https://monynha.com"
+              target="_blank"
+              rel="noopener noreferrer">
               🌐 Visit Website
             </Link>
           </div>

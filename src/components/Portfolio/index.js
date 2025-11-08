@@ -3,36 +3,29 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import styles from './styles.module.css';
 
-const projects = [
-  {
-    title: 'Boteco Pro',
-    description: 'A complete management system for bars and restaurants: orders, inventory, and billing.',
-    technologies: ['Flutter', 'TypeScript', 'Convex'],
-    status: 'In Development',
-    link: '/docs/projects/boteco-pro',
-    featured: true,
-    icon: '🍺',
-    color: '#FF6B35'
-  },
-  {
-    title: 'Educational Platform',
-    description: 'Online learning platform with interactive courses, progress tracking, and certification.',
-    technologies: ['React', 'TypeScript', 'Docker'],
-    status: 'Planned',
-    link: '/docs/intro',
-    icon: '🎓',
-    color: '#4F46E5'
-  },
-  {
-    title: 'Enterprise Management Suite',
-    description: 'A complete suite for enterprise management with HR, finance, and operations modules.',
-    technologies: ['TypeScript', 'Coolify', 'Docker'],
-    status: 'Planned',
-    link: '/docs/intro',
-    icon: '🏢',
-    color: '#10B981'
-  }
+// Projects are maintained as docs under `docs/projects/*`.
+// Keep this small mapping here so the homepage links to the canonical docs pages.
+const PROJECTS = [
+  { slug: 'monynha-com', title: 'Monynha.com', icon: '🌐', color: '#6B8CFF', status: 'Production' },
+  { slug: 'monynha-online', title: 'Monynha Online', icon: '⚡', color: '#4F46E5', status: 'Maintenance' },
+  { slug: 'monynha-tech', title: 'Monynha Tech', icon: '🛠️', color: '#10B981', status: 'Active' },
+  { slug: 'boteco-pro', title: 'Boteco Pro', icon: '🍺', color: '#FF6B35', status: 'In Development' },
+  { slug: 'boteco-pt', title: 'Boteco PT', icon: '🍻', color: '#F97316', status: 'Planned' },
+  { slug: 'artleo-creative-spaces', title: 'Artleo Creative Spaces', icon: '🎨', color: '#A78BFA', status: 'Active' },
+  { slug: 'facodi', title: 'Facodi', icon: '🏗️', color: '#06B6D4', status: 'Active' },
+  { slug: 'sweet-price', title: 'Sweet Price', icon: '🧁', color: '#FB7185', status: 'Prototype' }
 ];
+
+const projects = PROJECTS.map((p, i) => ({
+  title: p.title,
+  description: `See the documentation page for ${p.title}.`,
+  technologies: [],
+  status: p.status,
+  link: `/docs/projects/${p.slug}`,
+  featured: p.slug === 'monynha-com',
+  icon: p.icon,
+  color: p.color
+}));
 
 const TECH_SLUGS = {
   'TypeScript': 'typescript',
