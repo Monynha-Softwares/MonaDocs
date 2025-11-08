@@ -1,0 +1,200 @@
+.techStack {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--ifm-color-primary);
+}
+
+.sectionSubtitle {
+  font-size: 1.2rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 2rem;
+}
+
+.techGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.techCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.techCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--tech-color), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.techCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.techCard:hover::before {
+  opacity: 0.1;
+}
+
+.techCard.active {
+  border-color: var(--tech-color);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.techCard.active::before {
+  opacity: 0.15;
+}
+
+.techIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.techCard:hover .techIcon {
+  transform: scale(1.1);
+}
+
+.techName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.techDescription {
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-600);
+  margin: 0;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.activeTechDisplay {
+  display: flex;
+  justify-content: center;
+}
+
+.activeTechCard {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--ifm-color-primary);
+  max-width: 600px;
+  width: 100%;
+}
+
+.activeTechIcon {
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+.activeTechInfo h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--ifm-color-primary);
+}
+
+.activeTechInfo p {
+  font-size: 1rem;
+  color: var(--ifm-color-emphasis-600);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.previewArea {
+  margin-top: 1rem;
+  border-top: 1px dashed var(--ifm-color-emphasis-200);
+  padding-top: 1rem;
+}
+
+.previewLoading {
+  color: var(--ifm-color-emphasis-500);
+  font-size: 0.95rem;
+}
+
+.previewError {
+  color: var(--ifm-color-danger-600);
+  font-size: 0.95rem;
+}
+
+.previewContent {
+  color: var(--ifm-color-emphasis-700);
+}
+
+.readMoreRow {
+  margin-top: 1rem;
+}
+
+.readMoreBtn {
+  display: inline-block;
+  background: var(--ifm-color-primary);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 768px) {
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .techGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .techCard {
+    padding: 1rem;
+  }
+
+  .activeTechCard {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .activeTechIcon {
+    font-size: 2.5rem;
+  }
+}
