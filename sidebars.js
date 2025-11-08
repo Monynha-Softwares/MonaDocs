@@ -20,13 +20,20 @@ const sidebars = {
     'intro',
     {
       type: 'category',
-      label: 'Projects',
+      label: 'Projetos',
       link: {
         type: 'generated-index',
-        description: 'Documentation for all Monynha Softwares projects, including overviews, tech stacks, features, and contribution guidelines.',
+        description: 'Documentação dos projetos Monynha (visões gerais, stacks e guias).',
       },
       items: [
-        'projects/boteco-pro'
+        'projetos/boteco-pro/index',
+        'projetos/artleo-creative-spaces/index',
+        'projetos/boteco-pt/index',
+        'projetos/facodi/index',
+        'projetos/monynha-com/index',
+        'projetos/monynha-online/index',
+        'projetos/monynha-tech/index',
+        'projetos/sweet-price/index'
       ]
     },
     {
