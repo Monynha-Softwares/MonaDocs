@@ -1,3 +1,43 @@
+## MonaDocs — AI coding agent instructions
+
+This short guide highlights repository-specific facts an AI agent needs to be productive working on the MonaDocs Docusaurus v3 site.
+
+### Quick facts (how to run)
+- Node: >= 20 (see `package.json` "engines").
+- Install: `yarn`
+- Dev server: `yarn start` (Docusaurus hot reload, port 3000)
+- Build: `yarn build` → artifacts in `build/`
+- Preview: `yarn serve`
+- Deploy: `USE_SSH=true; yarn deploy` (Docusaurus GitHub Pages preset)
+
+### Architecture & important files
+- Docusaurus config: `docusaurus.config.js` — controls navbar, footer, editUrl (points to `dev` by default), color mode, and presets.
+- Docs content: `docs/` — grouped into subfolders (e.g., `projects/`, `technologies/`). Each folder MAY contain `_category_.json` for metadata.
+- Sidebar generator: `sidebars.js` — programmatic sidebar produced from top-level folders. If you add a folder, the sidebar is auto-included by `TOP_FOLDERS` order.
+- Blog: `blog/` — MD/MDX with YAML frontmatter; authors in `blog/authors.yml`.
+- Components/UI: `src/components/*` (examples: `HomepageFeatures`, `Portfolio`, `TechStack`) and global styles in `src/css/custom.css`.
+- Static assets: `static/img/` for global images; doc-local images can live in `docs/<section>/img/` and be referenced as `./img/foo.png`.
+
+### Project-specific conventions (do this here)
+- Sidebar: Prefer adding `_category_.json` inside a docs subfolder for label/description overrides; `sidebars.js` reads these and generates categories.
+- Doc file ids: `sidebars.js` expects `folder/filename` ids (it prefers `index.md`/`index.mdx` for directory indexes).
+- Config edits: `docusaurus.config.js` runs in Node — do not reference `window`/DOM. Use `editUrl` when you want "edit this page" links to point to a specific branch (currently `dev`).
+
+### Examples (use these when making changes)
+- Add a doc: create `docs/<section>/new-doc.md`, add `_category_.json` if you need a custom label, then ensure `TOP_FOLDERS` in `sidebars.js` includes the folder if you want it surfaced.
+- Add a blog post: `blog/YYYY-MM-DD-title.md` with YAML frontmatter: `title`, `tags`, `authors` — add new authors in `blog/authors.yml`.
+- Edit homepage features: modify `src/components/HomepageFeatures/index.js` and the corresponding `styles.module.css`, then run `yarn start` to preview.
+
+### Build & validation notes
+- No CI is configured in the repo; validate changes locally with `yarn build && yarn serve` and inspect `build/`.
+- Tests: package.json provides a `test` script (`node --test scripts`) — check `scripts/` for test files if you need unit-style checks.
+
+### Watch-outs and gotchas
+- `sidebars.js` is intentionally dynamic: it expects certain folder structure and will generate indexes. If you need manual ordering beyond what it provides, edit `sidebars.js` directly.
+- Docusaurus config is evaluated by Node — avoid client-only code inside `docusaurus.config.js` or `sidebars.js`.
+- The `editUrl` in config points at the `dev` branch — update it if your PRs target a different base branch.
+
+If any part of this is incomplete or you'd like more examples (e.g., how components are wired into MDX), tell me which area to expand and I'll iterate.
 ## MonaDocs AI Coding Agent Instructions
 
 This guide enables AI coding agents to work productively in the MonaDocs Docusaurus v3 documentation site. It summarizes essential architecture, workflows, and conventions unique to this codebase.
