@@ -207,6 +207,42 @@ export default function Portfolio() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, selectedTech]);
 
+  // Permalink copy button component (small, self-contained)
+  function PermalinkButton({ activeTitle, slugify }) {
+    const [copied, setCopied] = React.useState(false);
+    const copyPermalink = React.useCallback(async () => {
+      try {
+        if (typeof window === 'undefined') return;
+        const slug = slugify(activeTitle);
+        const params = new URLSearchParams(window.location.search);
+        params.set('project', slug);
+        const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(url);
+        } else {
+          // fallback
+          const ta = document.createElement('textarea');
+          ta.value = url;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1800);
+      } catch (e) {
+        // ignore or optionally show a toast
+        console.error('Failed to copy permalink', e);
+      }
+    }, [activeTitle, slugify]);
+
+    return (
+      <button type="button" aria-label="Copy permalink" className={`button button--secondary`} onClick={copyPermalink}>
+        {copied ? 'Copied!' : 'Copy link'}
+      </button>
+    );
+  }
+
   return (
     <section className={styles.portfolio}>
       <div className="container">
@@ -289,8 +325,10 @@ export default function Portfolio() {
                           return (<span key={tech} className={styles.techTag}>{tech}</span>);
                         })}
                       </div>
-                      <div style={{ marginTop: '1rem' }}>
+                      <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
                         <Link to={active.link} className="button button--primary">View details →</Link>
+                        {/* Permalink copy button */}
+                        <PermalinkButton activeTitle={active.title} slugify={slugify} />
                       </div>
                     </div>
                   );
