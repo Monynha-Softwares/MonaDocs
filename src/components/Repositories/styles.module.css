@@ -63,6 +63,17 @@
 }
 .refreshBtn:disabled { opacity: 0.6; cursor: not-allowed; }
 
+.cacheActions { display: flex; gap: 0.5rem; align-items: center; }
+.clearBtn {
+  background: transparent;
+  color: var(--ifm-color-gray-700, #374151);
+  border: 1px solid var(--ifm-color-muted, #e5e7eb);
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.clearBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
 .spinner {
   display: inline-block;
   width: 14px;

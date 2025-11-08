@@ -40,6 +40,8 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
   const [loading, setLoading] = useState(true);
   const [cacheInfo, setCacheInfo] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  // trigger a forced reload by bumping this counter (used after clearing cache)
+  const [forceReloadCounter, setForceReloadCounter] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -118,10 +120,21 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
       }
     }
 
+    // Expose a small clear-cache helper by bumping a counter (causes effect to reload)
+    function clearCache() {
+      try {
+        localStorage.removeItem(CACHE_KEY);
+      } catch (e) {}
+      setCacheInfo(null);
+      setRepos(null);
+      // bump counter so effect re-runs and performs a fresh load
+      setForceReloadCounter((n) => n + 1);
+    }
+
     load();
     return () => { cancelled = true; };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, org, showForks]);
+  }, [user, org, showForks, forceReloadCounter]);
 
   if (loading && !repos) return <div className={styles.container}><p>Loading repositories...</p></div>;
   if (error && !repos) return <div className={styles.container}><p className={styles.error}>Error: {error}</p></div>;
@@ -140,14 +153,17 @@ export default function Repositories({user = 'marcelo-m7', org = 'Monynha-Softwa
     const ttlMinutes = Math.ceil(ttlRemainingMs / 60000);
     return (
       <div className={styles.cacheBar}>
-        <div className={styles.cacheInfo}>Cached: {when} • refresh in ~{ttlMinutes}m</div>
-        <div>
-          <button className={styles.refreshBtn} onClick={refreshNow} disabled={loading || refreshing}>
-            {refreshing ? <span className={styles.spinner} aria-hidden="true"/> : null}
-            {refreshing ? 'Refreshing...' : 'Refresh now'}
-          </button>
+          <div className={styles.cacheInfo}>Cached: {when} • refresh in ~{ttlMinutes}m</div>
+          <div className={styles.cacheActions}>
+            <button className={styles.refreshBtn} onClick={refreshNow} disabled={loading || refreshing}>
+              {refreshing ? <span className={styles.spinner} aria-hidden="true"/> : null}
+              {refreshing ? 'Refreshing...' : 'Refresh now'}
+            </button>
+            <button className={styles.clearBtn} onClick={() => { if (!loading) { clearCache(); } }} disabled={loading || refreshing} aria-label="Clear repositories cache">
+              Clear cache
+            </button>
+          </div>
         </div>
-      </div>
     );
   }
 

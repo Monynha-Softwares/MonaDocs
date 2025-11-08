@@ -98,6 +98,7 @@ const config = {
             position: 'left',
             items: [
               { to: '/docs/intro', label: 'Introduction' },
+              { to: '/docs/repositories', label: 'Repositories' },
               { to: '/docs/technologies/frontend-stack', label: 'Technologies' },
               { to: '/docs/guidelines/ux-guidelines', label: 'Guidelines' },
               { to: '/docs/identity/brand-guidelines', label: 'Identity' },
@@ -131,6 +132,10 @@ const config = {
               {
                 label: 'Introduction',
                 to: '/docs/intro',
+              },
+              {
+                label: 'Repositories',
+                to: '/docs/repositories',
               },
               {
                 label: 'Projects',
