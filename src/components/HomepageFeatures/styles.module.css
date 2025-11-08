@@ -1,11 +1,14 @@
 .features {
   display: flex;
   align-items: center;
-  padding: 2rem 0;
+  padding: 3rem 0;
   width: 100%;
+  background: linear-gradient(180deg, rgba(191, 219, 254, 0.35) 0%, rgba(219, 234, 254, 0) 100%);
 }
 
 .featureSvg {
-  height: 200px;
-  width: 200px;
+  height: 180px;
+  width: 180px;
+  filter: drop-shadow(0 12px 24px rgba(37, 99, 235, 0.18));
+  border-radius: 24px;
 }

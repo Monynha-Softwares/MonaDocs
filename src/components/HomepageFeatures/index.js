@@ -5,7 +5,8 @@ import styles from './styles.module.css';
 const FeatureList = [
   {
     title: 'Innovative Projects',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('@site/static/img/icon-projects.svg').default,
+    alt: 'Projects dashboard illustration in Monynha blue',
     description: (
       <>
         Browse our project documentation — from restaurant management systems to
@@ -15,7 +16,8 @@ const FeatureList = [
   },
   {
     title: 'Advanced Technologies',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    Svg: require('@site/static/img/icon-technologies.svg').default,
+    alt: 'Technology ecosystem icon in Monynha green and blue',
     description: (
       <>
         Learn about the technologies we use: TypeScript, Flutter, Convex, Coolify,
@@ -25,7 +27,8 @@ const FeatureList = [
   },
   {
     title: 'Standards & Quality',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    Svg: require('@site/static/img/icon-standards.svg').default,
+    alt: 'Quality standards checklist icon in Monynha purple',
     description: (
       <>
         Access our internal development standards, contribution guides, and
@@ -35,11 +38,11 @@ const FeatureList = [
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({Svg, alt, title, description}) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <Svg className={styles.featureSvg} role="img" aria-label={alt} focusable="false" />
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>

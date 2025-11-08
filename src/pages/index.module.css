@@ -43,14 +43,15 @@
 }
 
 .button--outline {
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  color: white;
-  background: transparent;
-  transition: all 0.3s ease;
+  border: 2px solid var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px);
 }
 
-.button--outline:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: white;
-  transform: translateY(-2px);
+.button--outline:hover,
+.button--outline:focus-visible {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: var(--ifm-color-primary-dark);
+  color: var(--ifm-color-primary-dark);
 }

@@ -18,3 +18,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Generated favicons
+static/img/favicon-*.png
+static/img/favicon.png
+static/img/favicon.ico

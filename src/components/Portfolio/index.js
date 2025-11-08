@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import styles from './styles.module.css';
 
@@ -194,14 +193,15 @@ export default function Portfolio() {
           <div className={styles.featuredColumn}>
             <div className={styles.leftList}>
               {paged.map((project) => (
-                <div
-                  key={project.title}
-                  className={`${styles.projectThumb} ${project.title === (typeof window !== 'undefined' ? null : '') ? '' : ''} ${project.title === null ? '' : ''}`}
-                >
-                  <div className={styles.projectThumbInner} onClick={() => {
-                    // set active to clicked project
-                    try { setActiveTitle(project.title); } catch (e) {}
-                  }}>
+                <div key={project.title} className={styles.projectThumb}>
+                  <button
+                    type="button"
+                    className={styles.projectThumbInner}
+                    onClick={() => {
+                      try { setActiveTitle(project.title); } catch (e) {}
+                    }}
+                    aria-pressed={activeTitle === project.title}
+                  >
                     <div className={styles.thumbHeader}>
                       <div className={styles.projectIconSmall} style={{ backgroundColor: project.color }}>{project.icon}</div>
                       <div className={styles.thumbMeta}>
@@ -210,7 +210,7 @@ export default function Portfolio() {
                       </div>
                     </div>
                     <p className={styles.thumbDescription}>{project.description}</p>
-                  </div>
+                  </button>
                   <div className={styles.thumbActions}>
                     <Link to={project.link} className="button button--link">View details →</Link>
                   </div>

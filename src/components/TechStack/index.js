@@ -49,19 +49,27 @@ const techStack = [
 
 function TechCard({ tech, isActive, onClick }) {
   return (
-    <div
+    <button
+      type="button"
       className={clsx(styles.techCard, { [styles.active]: isActive })}
       onClick={onClick}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onClick();
+        }
+      }}
       style={{ '--tech-color': tech.color }}
+      aria-pressed={isActive}
     >
-      <div className={styles.techIcon}>
+      <span className={styles.techIcon} aria-hidden="true">
         {tech.icon}
-      </div>
-      <h3 className={styles.techName}>{tech.name}</h3>
+      </span>
+      <span className={styles.techName}>{tech.name}</span>
       {isActive && (
-        <p className={styles.techDescription}>{tech.description}</p>
+        <span className={styles.techDescription}>{tech.description}</span>
       )}
-    </div>
+    </button>
   );
 }
 

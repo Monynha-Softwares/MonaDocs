@@ -12,9 +12,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'MonaDocs',
   tagline: 'Central Documentation Hub for Monynha Softwares',
-  // Use an SVG favicon for crisp rendering on modern browsers
-  // If you need .ico for legacy support, add `static/img/favicon.ico` and update this line.
-  favicon: 'img/favicon.svg',
+  // Branded favicon provided in both PNG and ICO variants for broad browser support
+  favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -91,21 +90,13 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          // Explicit dropdown exposing main documentation areas so the mobile menu
-          // shows all relevant links (projects, technologies, guidelines, etc.).
-          {
-            label: 'Documentation',
-            position: 'left',
-            items: [
-              { to: '/docs/intro', label: 'Introduction' },
-              { to: '/docs/repositories', label: 'Repositories' },
-              { to: '/docs/technologies/frontend-stack', label: 'Technologies' },
-              { to: '/docs/guidelines/ux-guidelines', label: 'Guidelines' },
-              { to: '/docs/identity/brand-guidelines', label: 'Identity' },
-              { to: '/docs/contribution/contributing', label: 'Contribution' },
-              { to: '/docs/architecture/backend-architecture', label: 'Architecture' },
-            ],
-          },
+          { type: 'doc', docId: 'intro', label: 'Introduction', position: 'left' },
+          { type: 'doc', docId: 'repositories/index', label: 'Repositories', position: 'left' },
+          { type: 'doc', docId: 'technologies/frontend-stack', label: 'Technologies', position: 'left' },
+          { type: 'doc', docId: 'guidelines/ux-guidelines', label: 'Guidelines', position: 'left' },
+          { type: 'doc', docId: 'identity/brand-guidelines', label: 'Identity', position: 'left' },
+          { type: 'doc', docId: 'contribution/contributing', label: 'Contribution', position: 'left' },
+          { type: 'doc', docId: 'architecture/backend-architecture', label: 'Architecture', position: 'left' },
           { to: '/blog', label: 'Blog', position: 'left' },
           {
             label: 'Company',
@@ -129,56 +120,29 @@ const config = {
           {
             title: 'Documentation',
             items: [
-              {
-                label: 'Introduction',
-                to: '/docs/intro',
-              },
-              {
-                label: 'Repositories',
-                to: '/docs/repositories',
-              },
-              {
-                label: 'Projects',
-                to: '/docs/projects/boteco-pro',
-              },
-              {
-                label: 'Technologies',
-                to: '/docs/technologies/typescript',
-              },
+              { label: 'Introduction', to: '/docs/intro' },
+              { label: 'Repositories', to: '/docs/repositories' },
+              { label: 'Technologies', to: '/docs/technologies/frontend-stack' },
+              { label: 'Guidelines', to: '/docs/guidelines/ux-guidelines' },
+              { label: 'Identity', to: '/docs/identity/brand-guidelines' },
+              { label: 'Contribution', to: '/docs/contribution/contributing' },
+              { label: 'Architecture', to: '/docs/architecture/backend-architecture' },
             ],
           },
           {
             title: 'Company',
             items: [
-              {
-                label: 'Monynha.com',
-                href: 'https://monynha.com',
-              },
-              {
-                label: 'Projects',
-                href: 'https://monynha.com/projects',
-              },
-              {
-                label: 'Portfolio',
-                href: 'https://marcelo.monynha.com/portfolio',
-              },
+              { label: 'Monynha.com', href: 'https://monynha.com' },
+              { label: 'Projects', href: 'https://monynha.com/projects' },
+              { label: 'Portfolio', href: 'https://marcelo.monynha.com/portfolio' },
             ],
           },
           {
             title: 'Community',
             items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/Monynha-Softwares',
-              },
-              {
-                label: 'Monynha Online',
-                href: 'https://monynha.online',
-              },
+              { label: 'Blog', to: '/blog' },
+              { label: 'GitHub', href: 'https://github.com/Monynha-Softwares' },
+              { label: 'Monynha Online', href: 'https://monynha.online' },
             ],
           },
         ],
