@@ -157,6 +157,46 @@ export default function Portfolio() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // helper slugify for deep links
+  function slugify(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  }
+
+  // Read project deep-link from URL (?project=slug or #project=slug) on mount
+  React.useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        const qp = params.get('project');
+        let slug = qp || null;
+        if (!slug && window.location.hash) {
+          const m = window.location.hash.match(/project=([^&]+)/);
+          if (m) slug = decodeURIComponent(m[1]);
+        }
+        if (slug) {
+          const found = projects.find((p) => slugify(p.title) === slug);
+          if (found) setActiveTitle(found.title);
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Update URL when activeTitle changes (client only)
+  React.useEffect(() => {
+    try {
+      if (typeof window !== 'undefined' && activeTitle) {
+        const slug = slugify(activeTitle);
+        const params = new URLSearchParams(window.location.search);
+        params.set('project', slug);
+        const newUrl = `${window.location.pathname}?${params.toString()}` + window.location.hash;
+        window.history.replaceState({}, '', newUrl);
+      }
+    } catch (e) {}
+  }, [activeTitle]);
+
   // Keep activeTitle consistent with filters/pages: if active project not in current paged list, reset to first
   React.useEffect(() => {
     const existsInPaged = paged.some((p) => p.title === activeTitle);
@@ -193,29 +233,34 @@ export default function Portfolio() {
         <div className={styles.twoColumnRow}>
           <div className={styles.featuredColumn}>
             <div className={styles.leftList}>
-              {paged.map((project) => (
-                <div
-                  key={project.title}
-                  className={`${styles.projectThumb} ${project.title === (typeof window !== 'undefined' ? null : '') ? '' : ''} ${project.title === null ? '' : ''}`}
-                >
-                  <div className={styles.projectThumbInner} onClick={() => {
-                    // set active to clicked project
-                    try { setActiveTitle(project.title); } catch (e) {}
-                  }}>
-                    <div className={styles.thumbHeader}>
-                      <div className={styles.projectIconSmall} style={{ backgroundColor: project.color }}>{project.icon}</div>
-                      <div className={styles.thumbMeta}>
-                        <h4 className={styles.thumbTitle}>{project.title}</h4>
-                        <div className={styles.thumbStatus}>{project.status}</div>
+              {paged.map((project) => {
+                const slug = slugify(project.title);
+                const isActive = project.title === activeTitle;
+                return (
+                  <div key={slug} className={styles.projectThumbWrapper}>
+                    <button
+                      className={`${styles.projectThumb} ${isActive ? styles.thumbActive : ''}`}
+                      onClick={() => setActiveTitle(project.title)}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTitle(project.title); } }}
+                      aria-pressed={isActive}
+                    >
+                      <div className={styles.projectThumbInner}>
+                        <div className={styles.thumbHeader}>
+                          <div className={styles.projectIconSmall} style={{ backgroundColor: project.color }}>{project.icon}</div>
+                          <div className={styles.thumbMeta}>
+                            <h4 className={styles.thumbTitle}>{project.title}</h4>
+                            <div className={styles.thumbStatus}>{project.status}</div>
+                          </div>
+                        </div>
+                        <p className={styles.thumbDescription}>{project.description}</p>
                       </div>
+                    </button>
+                    <div className={styles.thumbActions}>
+                      <Link to={project.link} className="button button--link">View details →</Link>
                     </div>
-                    <p className={styles.thumbDescription}>{project.description}</p>
                   </div>
-                  <div className={styles.thumbActions}>
-                    <Link to={project.link} className="button button--link">View details →</Link>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className={styles.pagination}>
               <button className="button button--outline" onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1}>Previous</button>
