@@ -1,8 +1,8 @@
 {
-  "label": "Projects (legacy)",
-  "position": 99,
+  "label": "Projects",
+  "position": 2,
   "link": {
     "type": "generated-index",
-    "description": "LEGACY: Duplicate/legacy English project pages. Prefer /docs/projetos/* (Portuguese)."
+    "description": "Documentation for Monynha Softwares projects: overviews, tech stacks, and guides."
   }
 }

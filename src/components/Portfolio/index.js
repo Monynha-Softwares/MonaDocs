@@ -9,7 +9,7 @@ const projects = [
     description: 'Sistema completo de gestão para bares e restaurantes com controle de pedidos, estoque e financeiro.',
     technologies: ['Flutter', 'TypeScript', 'Convex'],
     status: 'Em Desenvolvimento',
-    link: '/docs/projetos/boteco-pro',
+  link: '/docs/projects/boteco-pro',
     icon: '🍺',
     color: '#FF6B35'
   },

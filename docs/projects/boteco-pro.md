@@ -3,13 +3,13 @@ title: "Boteco Pro — Project Overview"
 sidebar_position: 1
 ---
 
-This page is retained for compatibility. The canonical project documentation now lives under the Portuguese `projetos` section.
+This compatibility page points to the canonical project documentation under the `projects` section.
 
 Please visit the canonical page for Boteco Pro:
 
-[Boteco Pro — Página principal](/docs/projetos/boteco-pro)
+[Boteco Pro — Project Page](/docs/projects/boteco-pro)
 
-If you maintain docs links that point to `/docs/projects/*`, consider updating them to `/docs/projetos/*`.
+If you maintain docs links that point to `/docs/projetos/*`, consider updating them to `/docs/projects/*`.
 
 ### Planned
 
