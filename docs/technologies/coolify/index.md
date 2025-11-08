@@ -45,10 +45,10 @@ Coolify is an open-source, self-hosted PaaS that lets teams deploy web apps, dat
 ```bash
 # Example: Notify Coolify to deploy image-tag v1.2.3
 curl -X POST \
-	-H "Authorization: Bearer ${COOLIFY_API_TOKEN}" \
-	-H "Content-Type: application/json" \
-	https://your-coolify.example.com/api/deploy \
-	-d '{"projectId":"<project-id>","image":"registry.example.com/org/app:v1.2.3"}'
+  -H "Authorization: Bearer ${COOLIFY_API_TOKEN}" \
+  -H "Content-Type: application/json" \
+  https://your-coolify.example.com/api/deploy \
+  -d '{"projectId":"<project-id>","image":"registry.example.com/org/app:v1.2.3"}'
 ```
 
 ## Troubleshooting tips
@@ -59,5 +59,5 @@ curl -X POST \
 
 ## Resources
 
-- Official docs: https://coolify.io/docs
-- Source: https://github.com/coollabsio/coolify
+- Official docs: [Coolify docs](https://coolify.io/docs)
+- Source: [coollabsio/coolify](https://github.com/coollabsio/coolify)

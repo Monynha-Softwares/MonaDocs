@@ -70,4 +70,6 @@ Tips for local dev:
 
 - Official docs: https://convex.dev/docs
 - Convex dashboard: https://dashboard.convex.dev
+ - Official docs: [Convex docs](https://convex.dev/docs)
+ - Convex dashboard: [Convex dashboard](https://dashboard.convex.dev)
 

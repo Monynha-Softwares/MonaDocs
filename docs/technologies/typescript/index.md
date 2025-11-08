@@ -29,20 +29,20 @@ If you previously referenced `/docs/tecnologias/typescript`, the Portuguese cont
 
 ```json
 {
-	"compilerOptions": {
-		"target": "ES2022",
-		"module": "ESNext",
-		"moduleResolution": "node",
-		"strict": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"skipLibCheck": true,
-		"incremental": true,
-		"tsBuildInfoFile": "./.tsbuildinfo",
-		"declaration": true
-	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules", "dist"]
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "incremental": true,
+    "tsBuildInfoFile": "./.tsbuildinfo",
+    "declaration": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
 ```
 
@@ -60,8 +60,8 @@ If you previously referenced `/docs/tecnologias/typescript`, the Portuguese cont
 
 ```json
 {
-	"compilerOptions": { "composite": true, "outDir": "lib" },
-	"references": []
+  "compilerOptions": { "composite": true, "outDir": "lib" },
+  "references": []
 }
 ```
 
@@ -77,10 +77,10 @@ Then in the root `tsconfig.json` use `references` to link packages.
 
 ```json
 {
-	"parser": "@typescript-eslint/parser",
-	"plugins": ["@typescript-eslint"],
-	"extends": ["eslint:recommended","plugin:@typescript-eslint/recommended"],
-	"rules": { "@typescript-eslint/explicit-module-boundary-types": "off" }
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": ["eslint:recommended","plugin:@typescript-eslint/recommended"],
+  "rules": { "@typescript-eslint/explicit-module-boundary-types": "off" }
 }
 ```
 

@@ -98,4 +98,4 @@ docker buildx build --cache-from type=registry,ref=ghcr.io/org/app:cache \
 
 ## Resources
 
-- Official documentation: https://docs.docker.com/compose/
+ - Official documentation: [Docker Compose docs](https://docs.docker.com/compose/)

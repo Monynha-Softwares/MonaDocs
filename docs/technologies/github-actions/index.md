@@ -100,5 +100,5 @@ jobs:
 
 ## Resources
 
-- Docs: https://docs.github.com/en/actions
-- Marketplace: https://github.com/marketplace?type=actions
+- Docs: [GitHub Actions docs](https://docs.github.com/en/actions)
+- Marketplace: [Actions Marketplace](https://github.com/marketplace?type=actions)
