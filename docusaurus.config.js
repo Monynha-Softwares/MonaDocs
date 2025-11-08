@@ -98,6 +98,7 @@ const config = {
             position: 'left',
             items: [
               { to: '/docs/intro', label: 'Introduction' },
+              { to: '/docs/repositories', label: 'Repositories' },
               { to: '/docs/technologies/frontend-stack', label: 'Technologies' },
               { to: '/docs/guidelines/ux-guidelines', label: 'Guidelines' },
               { to: '/docs/identity/brand-guidelines', label: 'Identity' },
@@ -110,9 +111,9 @@ const config = {
             label: 'Company',
             position: 'right',
             items: [
+              { label: 'Portfolio', href: 'https://marcelo.monynha.com/portfolio' },
+              { label: 'Projects', href: 'https://monynha.com/projects' },
               { label: 'Monynha.com', href: 'https://monynha.com' },
-              { label: 'Projects', href: 'https://monynha.com/projetos' },
-              { label: 'Portfolio', href: 'https://marcelo.monynha.com/portifolio' },
             ],
           },
           {
@@ -133,6 +134,10 @@ const config = {
                 to: '/docs/intro',
               },
               {
+                label: 'Repositories',
+                to: '/docs/repositories',
+              },
+              {
                 label: 'Projects',
                 to: '/docs/projects/boteco-pro',
               },
@@ -151,11 +156,11 @@ const config = {
               },
               {
                 label: 'Projects',
-                href: 'https://monynha.com/projetos',
+                href: 'https://monynha.com/projects',
               },
               {
                 label: 'Portfolio',
-                href: 'https://marcelo.monynha.com/portifolio',
+                href: 'https://marcelo.monynha.com/portfolio',
               },
             ],
           },
