@@ -314,5 +314,20 @@ We adhere to international accessibility standards:
 - **Community Resources**: Accessibility blogs, forums, and communities
 
 This comprehensive approach to accessibility ensures that all Monynha Softwares products are inclusive, usable, and compliant with the highest accessibility standards, providing equal access to digital experiences for everyone.
- 
- 
+
+## Quick smoke checks for docs contributors
+
+Run the site locally to verify accessibility-sensitive pages visually. On Windows use PowerShell; on macOS/Linux the same commands work in POSIX shells.
+
+```powershell
+# Install dependencies
+yarn install
+
+# Build and preview
+yarn build
+yarn serve
+```
+
+Use the axe browser extension or Lighthouse in Chrome DevTools for a quick automated audit.
+
+In PRs that change UI or content, add a short note in the PR description indicating the accessibility checks you ran (keyboard testing, screen reader check, or axe/Lighthouse results).
