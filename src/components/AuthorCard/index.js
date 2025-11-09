@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.css';
 
-export default function AuthorCard({ name, title, image = '/img/marcelo-m7-avatar.png', linkedin, github, children }) {
+export default function AuthorCard({ name, title, image = '/img/marcelo-m7-avatar.svg', linkedin, github, children }) {
   return (
     <div className={styles.card}>
       <img className={styles.avatar} src={image} alt={name} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/img/marcelo-m7-avatar.svg'; }} />

@@ -8,6 +8,8 @@ draft: true
 
 Marcelo (GitHub: `marcelo-m7`) is the founder and maintainer of MonaDocs. He focuses on developer experience, documentation tooling, and building internal tools that make publishing and maintaining docs easier.
 
+<!-- truncate -->
+
 Contact & links
 
 - LinkedIn: https://www.linkedin.com/in/marcelo-m7/
