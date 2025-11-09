@@ -1,49 +1,52 @@
 ---
-title: "Boteco Pro — Project Overview"
+title: "Boteco Pro"
 sidebar_position: 1
 ---
 
-This compatibility page points to the canonical project documentation under the `projects` section.
+# Boteco Pro
 
-Please visit the canonical page for Boteco Pro:
+## Overview
 
-[Boteco Pro — Project Page](/docs/projects/boteco-pro)
+Boteco Pro is Monynha Softwares' flagship hospitality management platform. It consolidates point-of-sale, inventory, reservations, and loyalty experiences into a single suite tailored for bars and restaurants in Portugal and beyond.
 
-If you maintain docs links that point to `/docs/projetos/*`, consider updating them to `/docs/projects/*`.
+## Customer outcomes
 
-### Planned
+- Reduce manual reconciliation by synchronising sales, stock, and accounting data.
+- Increase table turnover with smart reservations, waitlist management, and QR ordering.
+- Grow repeat business through integrated loyalty programs and segmented campaigns.
 
-- Advanced analytics dashboards
-- Loyalty / rewards system
-- Multi-location management
-- Web-based ordering integration
+## Product modules
 
-## Development status
+1. **Point of Sale** – Multi-terminal POS with offline mode, receipt customisation, and tipping.
+2. **Inventory & Procurement** – Supplier catalogues, purchase orders, and automated stock alerts.
+3. **Reservations & Floor Management** – Table layouts, pacing controls, and guest communications.
+4. **Loyalty & Marketing** – Tiered rewards, email/SMS campaigns, and customer analytics dashboards.
+5. **Insights** – Real-time KPI cockpit covering revenue, labour costs, and menu performance.
 
-- Current phase: Beta testing with select partners
-- Next milestone: v1.1 (enhanced reporting)
-- Target for full v1.0: Q1 2026
+## Technology landscape
 
-## Setup & local development
+- **Mobile**: Flutter app for in-venue operations and tablet ordering.
+- **Backend**: Convex for realtime data synchronisation, complemented by serverless functions for heavy processing.
+- **Integrations**: Fiscal printers, payment gateways, delivery platforms, and accounting tools (TIC, Sage, Xero).
+- **Infrastructure**: Containerised services orchestrated via Coolify with GitHub Actions CI/CD.
 
-### Prerequisites
+## Deployment model
 
-- Flutter SDK (3.x+)
-- Dart SDK (2.19+)
-- Convex account / project setup
+- Tenants are provisioned per venue with region-aware configurations (currency, tax rules).
+- Multi-environment setup: `production`, `staging`, `sandbox` for demos.
+- Automated backups and migration scripts maintained in the `infra/` directory of the main repository.
 
-### Quick start
+## Roadmap
 
-1. Clone the repository
+| Milestone | Description | Status |
+| --- | --- | --- |
+| Analytics v1.1 | Expand dashboards with labour cost tracking and anomaly detection. | In QA |
+| Loyalty 2.0 | Introduce card-linked offers and partner marketplace integrations. | Development |
+| Delivery Hub | Unified view for delivery platforms (Uber Eats, Glovo, Bolt Food). | Discovery |
 
-```bash
-git clone https://github.com/Monynha-Softwares/Boteco-Pro.git
-cd boteco-pro
-```
+## Contribution workflow
 
-1. Install dependencies
-
-```bash
-flutter pub get
-```
-
+1. Review open issues labelled `feature`, `bug`, or `research` before picking up work.
+2. Ensure database migrations include backward-compatibility notes.
+3. Add end-to-end tests for mission-critical flows (orders, reservations, loyalty redemption).
+4. Provide bilingual release notes (PT/EN) summarising changes for venue managers.

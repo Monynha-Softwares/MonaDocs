@@ -102,7 +102,7 @@ const TOP_FOLDERS = [
 ];
 
 /** @type {any[]} */
-const tutorialSidebar = ['intro'];
+const tutorialSidebar = ['intro', 'content-audit-2025-11'];
 
 for (const folder of TOP_FOLDERS) {
   const items = listDocsInDir(folder);
