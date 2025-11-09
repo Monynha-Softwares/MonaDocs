@@ -1,44 +1,42 @@
 ---
-slug: long-blog-post
-title: Long Blog Post
-authors: yangshun
-tags: [hello, docusaurus]
+slug: q2-2025-platform-roundup
+title: Q2 2025 Platform Roundup
+date: 2025-05-02
+authors:
+  - name: Infra & DevOps Guild
+    title: Platform Engineering
+    url: https://github.com/Monynha-Softwares
+    image_url: https://avatars.githubusercontent.com/u/127117172
+tags: [platform, ci-cd, devops]
 ---
 
-This is the summary of a very long blog post,
-
-Use a `<!--` `truncate` `-->` comment to limit blog post size in the list view.
+Quarter two brought foundational improvements across our platform engineering stack. Below you’ll find the highlights and the associated documentation you should bookmark.
 
 <!-- truncate -->
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+## Coolify + GitHub Actions parity
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+We aligned environment provisioning across Coolify and GitHub Actions. Service definitions now live in the shared `infra/compose` repository, so staging and CI containers are configured identically.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+- New [Coolify guide](/docs/technologies/coolify) covering project setup, secret management, and blue/green deployments.
+- [GitHub Actions advanced patterns](/docs/technologies/github-actions/advanced) explain matrix builds for Flutter, Next.js, and Convex.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+## CI/CD guardrails
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+- Added required checks for `yarn test`, `pnpm lint`, and Lighthouse performance budgets on marketing sites.
+- Introduced Slack alerts for flaky builds so owners can triage within 24 hours.
+- Documented manual approval flow for production deploys with compliance-friendly audit logs.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+## Observability upgrades
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+- Standardized OpenTelemetry instrumentation for backend services with dashboards in Grafana Cloud.
+- Released runbooks in [CI/CD runbooks](/docs/architecture/ci-cd) detailing how to recover from failed deploys and rollbacks.
+- Added chaos engineering experiments (latency injections) to staging twice per month.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+## Coming up
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+- Secret rotation automation with Doppler + GitHub Actions.
+- Shared Terraform modules for DNS and certificate provisioning.
+- Monitored preview environments for high-traffic marketing launches.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+Questions? Drop them in `#platform-engineering` and tag the infra guild. 🔧

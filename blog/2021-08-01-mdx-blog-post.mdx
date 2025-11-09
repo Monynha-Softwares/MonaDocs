@@ -1,24 +1,90 @@
 ---
-slug: mdx-blog-post
-title: MDX Blog Post
-authors: [slorber]
-tags: [docusaurus]
+slug: inclusive-design-lab
+title: Building the Inclusive Design Lab
+date: 2025-04-15
+authors:
+  - name: Identity & Accessibility Guild
+    title: Design Systems Team
+    url: https://github.com/Monynha-Softwares
+    image_url: https://avatars.githubusercontent.com/u/127117172
+tags: [design, accessibility, a11y]
 ---
 
-Blog posts support [Docusaurus Markdown features](https://docusaurus.io/docs/markdown-features), such as [MDX](https://mdxjs.com/).
+The Inclusive Design Lab is our new playground for testing UI components, motion guidelines, and accessibility guardrails before they land in production.
 
-:::tip
-
-Use the power of React to create interactive blog posts.
-
+:::info Why this matters
+70% of our active projects ship user-facing interfaces. Testing these experiences in isolation helps us deliver consistent, inclusive interactions across the board.
 :::
 
-{/* truncate */}
+<!-- truncate -->
 
-For example, use JSX to create an interactive button:
+## What’s inside
 
-```js
-<button onClick={() => alert('button clicked!')}>Click me!</button>
+- **Component sandboxes** powered by Storybook and Playroom. Designers and engineers can co-edit states in real time.
+- **Automated audits** that run Axe, Pa11y, and color-contrast checks every time a sandbox changes.
+- **Usage analytics** to reveal which variants are used across projects, helping us clean up duplicates.
+
+## Getting hands-on
+
+```jsx live
+function MotionToggleExample() {
+  const [reducedMotion, setReducedMotion] = React.useState(false);
+  return (
+    <div className={`demo ${reducedMotion ? 'demo--minimal-motion' : ''}`}>
+      <p>Preview the card animation with motion controls:</p>
+      <label className="toggle">
+        <input
+          type="checkbox"
+          checked={reducedMotion}
+          onChange={(event) => setReducedMotion(event.target.checked)}
+        />
+        <span>Enable reduced motion</span>
+      </label>
+      <div className="card">
+        <h4>ArtLeo Exhibit Launch</h4>
+        <p>Subtle hover and focus states respect user preferences.</p>
+      </div>
+    </div>
+  );
+}
+
+render(<MotionToggleExample />);
 ```
 
-<button onClick={() => alert('button clicked!')}>Click me!</button>
+<style>{`
+.demo {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: linear-gradient(145deg, rgba(37,99,235,0.12), rgba(16,185,129,0.12));
+}
+.demo--minimal-motion .card {
+  transition: none !important;
+  transform: none !important;
+}
+.toggle {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.card {
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background: #fff;
+  color: #0f172a;
+  box-shadow: 0 15px 40px -25px rgba(15, 23, 42, 0.75);
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+.demo:not(.demo--minimal-motion) .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 50px -25px rgba(15, 23, 42, 0.35);
+}
+`}</style>
+
+## How to contribute
+
+1. Add a Storybook story or Playroom example for the component you are proposing.
+2. Document accessibility considerations in `docs/identity/ui-components.md` and cross-link from the project page.
+3. Submit a PR and include screenshots or recordings; provide alt text for every visual asset.
+
+Join `#inclusive-design-lab` if you want to collaborate on the next iteration. 🌈

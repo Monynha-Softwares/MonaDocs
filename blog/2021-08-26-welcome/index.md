@@ -1,29 +1,43 @@
 ---
-slug: welcome
-title: Welcome
-authors: [slorber, yangshun]
-tags: [facebook, hello, docusaurus]
+slug: community-update-q1-2025
+title: Community Update — Q1 2025
+date: 2025-03-31
+authors:
+  - name: Community & Outreach Team
+    title: Partnerships
+    url: https://github.com/Monynha-Softwares
+    image_url: https://avatars.githubusercontent.com/u/127117172
+tags: [community, outreach, education]
 ---
 
-[Docusaurus blogging features](https://docusaurus.io/docs/blog) are powered by the [blog plugin](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-blog).
-
-Here are a few tips you might find useful.
+From scholarships to open-source releases, here’s what happened across the Monynha community in the first quarter of 2025.
 
 <!-- truncate -->
 
-Simply add Markdown files (or folders) to the `blog` directory.
+## Scholarships launched
 
-Regular blog authors can be added to `authors.yml`.
+- Awarded **12 Pride in Tech** scholarships covering tuition for FACODI learners.
+- Partnered with three Lisbon NGOs to offer Saturday bootcamps on digital literacy.
+- Published the scholarship playbook in `Notion → Community Ops` for transparency.
 
-The blog post date can be extracted from filenames, such as:
+## Events recap
 
-- `2019-05-30-welcome.md`
-- `2019-05-30-welcome/index.md`
+| Date | Event | Highlights |
+| --- | --- | --- |
+| 20 Jan | *AI for Social Impact* (Porto) | 150 attendees; workshop repo open-sourced under MIT |
+| 14 Feb | *Inclusive Web Design Jam* (Lisbon) | Co-hosted with UX Lisbon; produced 8 reusable Figma templates |
+| 09 Mar | *Women in Tech Career Clinic* (online) | 220 participants; launched mentorship pilot |
 
-A blog post folder can be convenient to co-locate blog post images:
+## Open-source contributions
 
-![Docusaurus Plushie](./docusaurus-plushie-banner.jpeg)
+- Released the **Accessibility Audit Kit** (Docusaurus theme plugin) used to generate Axe reports during builds.
+- Contributed to Convex community examples with a case study based on Sweet Price.
+- Added Portuguese translations to four upstream libraries (date-fns, Formik docs, Remix guides).
 
-The blog supports tags as well!
+## Get involved
 
-**And if you don't want a blog**: just delete this directory, and use `blog: false` in your Docusaurus config.
+- Join our monthly community call — last Friday of each month at 17:00 WET.
+- Subscribe to the newsletter via [monynha.online](https://monynha.online).
+- Follow ongoing initiatives in Slack `#community-outreach`.
+
+See you next quarter! 💫
