@@ -4,65 +4,37 @@ sidebar_position: 8
 ---
 
 import Repositories from '@site/src/components/Repositories';
+
 import React from 'react';
 
 # Repositories
 
-This page lists repositories published by the GitHub user `marcelo-m7` and the organisation `Monynha-Softwares`. The data is fetched client-side so it always reflects the latest public information.
+This page lists repositories discovered from the GitHub user `marcelo-m7` and the organization `Monynha-Softwares`. The fetching is done entirely in the browser using the public GitHub REST API.
 
-## Filters and URL parameters
+The page accepts optional query parameters in the URL:
 
-You can control the dataset through query parameters:
-
-- `mode`: `user`, `org`, or `both` (default) to choose which GitHub accounts to load.
-- `showForks`: `1`/`true` to include forks alongside source repositories.
+- `mode`: `user` (show only user repos), `org` (show only organization repos), or `both` (default)
+- `showForks`: `1` or `true` to include forked repos
 
 Examples:
 
-- `/docs/repositories?mode=user` — list only `marcelo-m7` repositories.
-- `/docs/repositories?mode=org&showForks=1` — show organisational repositories including forks.
-
-## Authentication and rate limits
-
-The component uses the public GitHub REST API. Anonymous requests are limited to 60 per hour. When iterating on this page locally you can raise the limit by creating a [fine-grained personal access token](https://github.com/settings/tokens) and providing it at runtime:
-
-```bash
-GITHUB_TOKEN=ghp_yourtoken npm run start
-```
-
-The token is read from `process.env.GITHUB_TOKEN` and never persisted in the browser. Do **not** commit secrets—document them in `.env.example` if new variables are required.
-
-## Caching strategy
-
-- Responses are cached in `localStorage` for six hours to reduce API calls.
-- Cache keys include the selected `mode` and `showForks` values to avoid stale mixes.
-- Use the “force refresh” button in the component (or clear local storage manually) after making repository changes that must appear immediately.
-
-## Accessibility considerations
-
-- All interactive controls meet WCAG AA contrast ratios and are reachable via keyboard.
-- Loading states announce progress through `aria-live` regions.
-- Repository cards expose headings, descriptions, and primary language details for screen-reader navigation.
+- `/docs/repositories?mode=user` — show only `marcelo-m7` repos
+- `/docs/repositories?mode=org&showForks=1` — show only `Monynha-Softwares` repos including forks
 
 export function RepositoryPageWrapper() {
-  const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams('');
-  const mode = params.get('mode') || 'both';
-  const showForks = params.get('showForks') === '1' || params.get('showForks') === 'true';
-
-  let user = 'marcelo-m7';
-  let org = 'Monynha-Softwares';
-  if (mode === 'org') user = null;
-  if (mode === 'user') org = null;
-
-  return <Repositories user={user} org={org} showForks={showForks} />;
+	const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams('');
+	const mode = params.get('mode') || 'both';
+	const showForks = params.get('showForks') === '1' || params.get('showForks') === 'true';
+	let user = 'marcelo-m7';
+	let org = 'Monynha-Softwares';
+	if (mode === 'org') user = null;
+	if (mode === 'user') org = null;
+	return <Repositories user={user} org={org} showForks={showForks} />;
 }
 
 <RepositoryPageWrapper />
 
-## Troubleshooting
+Notes:
 
-- If GitHub rate limits are reached, authenticate with a token or wait for the hourly window to reset.
-- Check browser console logs for API errors; the component surfaces detailed messages for 4xx/5xx responses.
-- When repositories are missing, confirm they are public and not archived.
-
-For the legacy static list, see the [archived page](./index.md).
+- Data is cached in `localStorage` for 6 hours to reduce requests and avoid hitting anonymous API rate limits.
+- If you need higher rate limits, provide a GitHub personal access token, but do not embed secrets in client-side code.
